@@ -1,36 +1,40 @@
-package com.javarush.baranov.testingplatform.entity;
+package com.javarush.baranov.testingplatform.entity.tests;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "authentication_attempts")
-@Data
+@Table(name = "questions")
+@Getter
+@Setter
 @NoArgsConstructor
-public class AuthenticationAttempts {
-
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String login;
-
     @Column(nullable = false)
-    private Integer attempts = 0;
+    private String text;
 
-    @Column(name = "last_attempt", nullable = false)
-    private LocalDateTime lastAttempt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_id", nullable = false)
+    private Test test;
 
-    public AuthenticationAttempts(String login, int attempts, LocalDateTime lastAttempt) {
-        this.login = login;
-        this.attempts = attempts;
-        this.lastAttempt = lastAttempt;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AnswerOption> answerOptions;
+
+    public Question(String text, Test test, List<AnswerOption> answerOptions) {
+        this.text = text;
+        this.test = test;
+        this.answerOptions = answerOptions;
     }
 
     @Override
@@ -40,8 +44,8 @@ public class AuthenticationAttempts {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        AuthenticationAttempts attempts = (AuthenticationAttempts) o;
-        return getId() != null && Objects.equals(getId(), attempts.getId());
+        Question question = (Question) o;
+        return getId() != null && Objects.equals(getId(), question.getId());
     }
 
     @Override

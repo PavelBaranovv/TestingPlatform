@@ -19,6 +19,6 @@ public class UserDao {
     public User get(Credentials credentials) {
         //TODO: UserDao::get
         System.out.println("Get " + credentials.getLogin() + " " + credentials.getPassword());
-        return new User(Role.TEACHER);
+        return new User("123", "123", Role.TEACHER);
     }
 }

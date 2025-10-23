@@ -6,10 +6,12 @@ import com.javarush.baranov.testingplatform.service.AuthenticationAttemptsServic
 import com.javarush.baranov.testingplatform.service.AuthenticationService;
 import com.javarush.baranov.testingplatform.service.UserService;
 import com.javarush.baranov.testingplatform.util.CredentialsExtractor;
+import com.javarush.baranov.testingplatform.util.HibernateConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+import org.hibernate.SessionFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @WebListener
@@ -27,7 +29,10 @@ public class ContextListener implements ServletContextListener {
         AuthenticationAttemptsService authAttemptsService = new AuthenticationAttemptsService(authAttemptsDao);
         AuthenticationService authService = new AuthenticationService(userService, authAttemptsService, credentialsExtractor);
 
+        SessionFactory sessionFactory = HibernateConfig.getSessionFactory();
+
         context.setAttribute("authenticationService", authService);
         context.setAttribute("credentialsExtractor", credentialsExtractor);
+        context.setAttribute("sessionFactory", sessionFactory);
     }
 }

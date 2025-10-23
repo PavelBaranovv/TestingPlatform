@@ -1,36 +1,36 @@
-package com.javarush.baranov.testingplatform.entity;
+package com.javarush.baranov.testingplatform.entity.tests;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "authentication_attempts")
-@Data
+@Table(name = "answers")
+@Getter
+@Setter
 @NoArgsConstructor
-public class AuthenticationAttempts {
-
+public class AnswerOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String login;
-
     @Column(nullable = false)
-    private Integer attempts = 0;
+    private String text;
 
-    @Column(name = "last_attempt", nullable = false)
-    private LocalDateTime lastAttempt;
+    @Column(nullable = false, name = "is_correct")
+    private Boolean isCorrect;
 
-    public AuthenticationAttempts(String login, int attempts, LocalDateTime lastAttempt) {
-        this.login = login;
-        this.attempts = attempts;
-        this.lastAttempt = lastAttempt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
+
+    public AnswerOption(String text, Boolean isCorrect) {
+        this.text = text;
+        this.isCorrect = isCorrect;
     }
 
     @Override
@@ -40,8 +40,8 @@ public class AuthenticationAttempts {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        AuthenticationAttempts attempts = (AuthenticationAttempts) o;
-        return getId() != null && Objects.equals(getId(), attempts.getId());
+        AnswerOption answerOption = (AnswerOption) o;
+        return getId() != null && Objects.equals(getId(), answerOption.getId());
     }
 
     @Override

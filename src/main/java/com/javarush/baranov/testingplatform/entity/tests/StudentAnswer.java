@@ -1,36 +1,38 @@
-package com.javarush.baranov.testingplatform.entity;
+package com.javarush.baranov.testingplatform.entity.tests;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
-
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "authentication_attempts")
-@Data
+@Table(name = "user_answers")
+@Getter
+@Setter
 @NoArgsConstructor
-public class AuthenticationAttempts {
-
+public class StudentAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String login;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attempt_id", nullable = false)
+    private StudentAttempt attempt;
 
-    @Column(nullable = false)
-    private Integer attempts = 0;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
-    @Column(name = "last_attempt", nullable = false)
-    private LocalDateTime lastAttempt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "selected_answer_id")
+    private AnswerOption selectedAnswer;
 
-    public AuthenticationAttempts(String login, int attempts, LocalDateTime lastAttempt) {
-        this.login = login;
-        this.attempts = attempts;
-        this.lastAttempt = lastAttempt;
+    public StudentAnswer(StudentAttempt attempt, Question question, AnswerOption selectedAnswer) {
+        this.attempt = attempt;
+        this.question = question;
+        this.selectedAnswer = selectedAnswer;
     }
 
     @Override
@@ -40,8 +42,8 @@ public class AuthenticationAttempts {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        AuthenticationAttempts attempts = (AuthenticationAttempts) o;
-        return getId() != null && Objects.equals(getId(), attempts.getId());
+        StudentAnswer studentAnswer = (StudentAnswer) o;
+        return getId() != null && Objects.equals(getId(), studentAnswer.getId());
     }
 
     @Override
