@@ -20,19 +20,19 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
 
-        UserDao userDao = new UserDao();
+        SessionFactory sessionFactory = HibernateConfig.getSessionFactory();
+
+        UserDao userDao = new UserDao(sessionFactory);
         UserService userService = new UserService(userDao);
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        CredentialsExtractor credentialsExtractor = new CredentialsExtractor(encoder);
-        AuthenticationAttemptsDao authAttemptsDao = new AuthenticationAttemptsDao();
+        CredentialsExtractor credentialsExtractor = new CredentialsExtractor();
+        AuthenticationAttemptsDao authAttemptsDao = new AuthenticationAttemptsDao(sessionFactory);
         AuthenticationAttemptsService authAttemptsService = new AuthenticationAttemptsService(authAttemptsDao);
-        AuthenticationService authService = new AuthenticationService(userService, authAttemptsService, credentialsExtractor);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        AuthenticationService authService = new AuthenticationService(userService, authAttemptsService, credentialsExtractor, encoder);
 
-        SessionFactory sessionFactory = HibernateConfig.getSessionFactory();
 
         context.setAttribute("authenticationService", authService);
         context.setAttribute("credentialsExtractor", credentialsExtractor);
-        context.setAttribute("sessionFactory", sessionFactory);
     }
 }

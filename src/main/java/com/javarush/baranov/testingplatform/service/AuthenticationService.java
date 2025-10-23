@@ -6,6 +6,9 @@ import com.javarush.baranov.testingplatform.enums.Role;
 import com.javarush.baranov.testingplatform.util.CredentialsExtractor;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -13,13 +16,17 @@ public class AuthenticationService {
     private final UserService userService;
     private final AuthenticationAttemptsService authenticationAttemptsService;
     private final CredentialsExtractor credentialsExtractor;
+    private final PasswordEncoder encoder;
 
     public boolean register(HttpServletRequest req) {
         Credentials credentials = credentialsExtractor.extract(req);
+
         if (userService.isExist(credentials.getLogin())) {
             return false;
         }
-        userService.save(credentials);
+
+        Credentials encodedCredentials = getEncodedCredentials(credentials);
+        userService.save(encodedCredentials);
         return true;
     }
 
@@ -31,14 +38,26 @@ public class AuthenticationService {
             return null;
         }
 
-        User user = userService.get(credentials);
+        Optional<User> optionalUser = userService.getByLogin(credentials.getLogin());
 
-        if (user == null) {
-            req.setAttribute("error_message", "Не верные логин или пароль.");
+        if (optionalUser.isEmpty() ||
+                !isPasswordCorrect(credentials, optionalUser.get())) {
+            req.setAttribute("error_message", "Неверное имя пользователя или пароль.");
             return null;
         }
 
-        req.getSession().setAttribute("user", user);
-        return user.getRole();
+        authenticationAttemptsService.resetAttempts(credentials.getLogin());
+        req.getSession().setAttribute("user", optionalUser.get());
+        return optionalUser.get().getRole();
+    }
+
+
+    private Credentials getEncodedCredentials(Credentials credentials) {
+        String encodedPassword = encoder.encode(credentials.getPassword());
+        return new Credentials(credentials.getLogin(), encodedPassword, credentials.getRole());
+    }
+
+    private boolean isPasswordCorrect(Credentials credentials, User user) {
+        return encoder.matches(credentials.getPassword(), user.getPassword());
     }
 }

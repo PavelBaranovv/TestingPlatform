@@ -4,20 +4,23 @@ import com.javarush.baranov.testingplatform.dao.UserDao;
 import com.javarush.baranov.testingplatform.entity.Credentials;
 import com.javarush.baranov.testingplatform.entity.User;
 import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserDao userDao;
 
     public void save(Credentials credentials) {
         userDao.save(credentials);
     }
 
-    public boolean isExist(String login) {
-        return userDao.isExists(login);
+    public Optional<User> getByLogin(String login) {
+        return userDao.findByLogin(login);
     }
 
-    public User get(Credentials credentials) {
-        return userDao.get(credentials);
+    public boolean isExist(String login) {
+        Optional<User> user = userDao.findByLogin(login);
+        return user.isPresent();
     }
 }

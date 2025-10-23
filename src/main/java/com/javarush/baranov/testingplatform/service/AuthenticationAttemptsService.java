@@ -24,6 +24,10 @@ public class AuthenticationAttemptsService {
         return false;
     }
 
+    public void resetAttempts(String login) {
+        authenticationAttemptsDao.resetAttempts(login);
+    }
+
     private boolean blockTimeIsFinished(LocalDateTime blockedAt) {
         return blockedAt.plus(BAN_TIME).isBefore(LocalDateTime.now());
     }
