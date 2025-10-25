@@ -1,4 +1,4 @@
-package com.javarush.baranov.testingplatform.service;
+package com.javarush.baranov.testingplatform.service.auth;
 
 import com.javarush.baranov.testingplatform.dao.AuthenticationAttemptsDao;
 import com.javarush.baranov.testingplatform.entity.AuthenticationAttempts;

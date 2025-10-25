@@ -1,6 +1,6 @@
-package com.javarush.baranov.testingplatform.servlet.authentication;
+package com.javarush.baranov.testingplatform.servlet.auth;
 
-import com.javarush.baranov.testingplatform.service.AuthenticationService;
+import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -31,7 +31,7 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(!authService.register(req)) {
-            req.setAttribute("error_message", "Такой аккаунт уже существует");
+            req.setAttribute("registration_error", "Такой аккаунт уже существует");
             req.getRequestDispatcher("/registration.jsp").forward(req, resp);
             return;
         }

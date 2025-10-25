@@ -3,44 +3,50 @@
 <html>
 <head>
     <title>Регистрация</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<h1>Регистрация</h1>
-<form action="registration" method="post">
-    <div>
-        <label>
-            Логин: <input type="text" name="login" required>
-        </label>
-    </div>
+<div class="auth_container">
+    <h1>Регистрация</h1>
+    <form method="post">
+        <div class="form-group">
+            <label>Логин:
+            <input type="text" name="login" required>
+            </label>
+        </div>
 
-    <div>
-        <label>
-            Пароль: <input type="password" id="password" name="password" required>
-        </label>
-    </div>
+        <div class="form-group">
+            <label>Пароль:
+            <input type="password" id="password" name="password" required>
+            </label>
+        </div>
 
-    <div>
-        <label>Тип аккаунта:</label><br>
-        <label>
-            <input type="radio" id="student" name="role" value="student" checked> Ученик
-        </label><br>
+        <div class="form-group">
+            <label>Кто вы?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="student" name="role" value="student" checked>
+                    <label for="student">Ученик</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="teacher" name="role" value="teacher">
+                    <label for="teacher">Преподаватель</label>
+                </div>
+            </div>
+        </div>
 
-        <label>
-            <input type="radio" id="teacher" name="role" value="teacher"> Преподаватель
-        </label>
-    </div>
-
-    <div>
-        <button type="submit">Зарегистрироваться</button>
-    </div>
-    <div>
-        <a href="${pageContext.request.contextPath}/login">У меня уже есть аккаунт</a>
-    </div>
-</form>
-<c:if test="${not empty error_message}">
-    <div class="alert alert-danger">
-        <c:out value="${error_message}" />
-    </div>
-</c:if>
+        <div class="btn-group">
+            <button type="submit" class="btn">Зарегистрироваться</button>
+        </div>
+        <div class="form-group">
+            <a href="${pageContext.request.contextPath}/login">У меня уже есть аккаунт</a>
+        </div>
+    </form>
+    <c:if test="${not empty sessionScope.registration_error}">
+        <div class="error-message">
+            <c:out value="${sessionScope.registration_error}" />
+        </div>
+    </c:if>
+</div>
 </body>
 </html>

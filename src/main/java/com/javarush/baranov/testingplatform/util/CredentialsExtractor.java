@@ -1,7 +1,7 @@
 package com.javarush.baranov.testingplatform.util;
 
-import com.javarush.baranov.testingplatform.entity.Credentials;
 import com.javarush.baranov.testingplatform.enums.Role;
+import com.javarush.baranov.testingplatform.util.entities.Credentials;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 

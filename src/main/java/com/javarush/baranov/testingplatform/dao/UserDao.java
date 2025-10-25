@@ -1,8 +1,6 @@
 package com.javarush.baranov.testingplatform.dao;
 
-import com.javarush.baranov.testingplatform.entity.Credentials;
 import com.javarush.baranov.testingplatform.entity.User;
-import com.javarush.baranov.testingplatform.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,11 +12,7 @@ public class UserDao {
 
     private final SessionFactory sessionFactory;
 
-    public void save(Credentials credentials) {
-        String login = credentials.getLogin();
-        String password = credentials.getPassword();
-        Role role = credentials.getRole();
-        User user = new User(login, password, role);
+    public void save(User user) {
         sessionFactory.inTransaction((session) -> session.persist(user));
     }
 

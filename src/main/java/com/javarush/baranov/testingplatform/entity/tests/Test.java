@@ -1,10 +1,13 @@
 package com.javarush.baranov.testingplatform.entity.tests;
 
 import com.javarush.baranov.testingplatform.entity.User;
+import com.javarush.baranov.testingplatform.enums.TestShowResult;
+import com.javarush.baranov.testingplatform.enums.TestCreationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDateTime;
@@ -19,8 +22,9 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Test {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -33,6 +37,14 @@ public class Test {
 
     @Column(name = "need_to_answer")
     private Integer needToAnswer;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "show_result")
+    TestShowResult showResult;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "creation_status")
+    TestCreationStatus status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -47,13 +59,12 @@ public class Test {
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     private List<StudentAttempt> attempts = new ArrayList<>();
 
-    public Test(String name, String description, Integer questionCount, Integer needToAnswer, LocalDateTime created_at, User createdBy) {
+    public Test(String name, String description, TestCreationStatus status, User createdBy) {
         this.name = name;
         this.description = description;
-        this.questionCount = questionCount;
-        this.needToAnswer = needToAnswer;
-        this.createdAt = created_at;
+        this.status = status;
         this.createdBy = createdBy;
+        this.questionCount = 0;
     }
 
     @Override

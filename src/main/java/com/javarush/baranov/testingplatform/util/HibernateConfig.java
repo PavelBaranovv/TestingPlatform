@@ -6,7 +6,6 @@ import com.javarush.baranov.testingplatform.entity.tests.*;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import java.util.Properties;
 
 public class HibernateConfig {

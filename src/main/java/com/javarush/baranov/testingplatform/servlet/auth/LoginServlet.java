@@ -1,7 +1,7 @@
-package com.javarush.baranov.testingplatform.servlet.authentication;
+package com.javarush.baranov.testingplatform.servlet.auth;
 
 import com.javarush.baranov.testingplatform.enums.Role;
-import com.javarush.baranov.testingplatform.service.AuthenticationService;
+import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/login")
+@WebServlet(urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
     AuthenticationService authService;
 
@@ -35,9 +35,9 @@ public class LoginServlet extends HttpServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else if (role == Role.TEACHER) {
             //TODO: replace static references
-            resp.sendRedirect(req.getContextPath() + "/teacher/teacher_home.jsp");
+            resp.sendRedirect(req.getContextPath() + "/teacher/home");
         } else if (role == Role.STUDENT) {
-            resp.sendRedirect(req.getContextPath() + "/student/student_home.jsp");
+            resp.sendRedirect(req.getContextPath() + "/student/home.jsp");
         }
     }
 }

@@ -5,4 +5,5 @@ import java.time.Duration;
 public interface Configuration {
     int MAX_AUTH_ATTEMPTS = 3;
     Duration BAN_TIME = Duration.ofMinutes(5);
+    int DEFAULT_ANSWERS_COUNT = 4;
 }
