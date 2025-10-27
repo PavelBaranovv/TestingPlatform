@@ -4,6 +4,7 @@ import com.javarush.baranov.testingplatform.dao.TestDao;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
+import com.javarush.baranov.testingplatform.service.ResultsViewService;
 import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
 import com.javarush.baranov.testingplatform.util.AttemptAttributesExtractor;
 import com.javarush.baranov.testingplatform.util.entities.AttemptAttributes;
@@ -21,6 +22,7 @@ public class TestSolvingService {
     private final TestDao testDao;
     private final AttemptAttributesExtractor attemptAttributesExtractor;
     private final StudentAttemptsService attemptsService;
+    private final ResultsViewService resultsViewService;
 
     public void navigate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,12 +35,12 @@ public class TestSolvingService {
             return;
         }
 
-        String status = (String) session.getAttribute("solving_status");
+        StudentAttempt attempt = (StudentAttempt) session.getAttribute("attempt");
 
-        if ("solving".equals(status)) {
-            req.getRequestDispatcher("/student/test_solving.jsp").forward(req, resp);
-        } else {
+        if (attempt == null) {
             req.getRequestDispatcher("/student/test_welcome.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("/student/test_solving.jsp").forward(req, resp);
         }
     }
 
@@ -86,20 +88,21 @@ public class TestSolvingService {
         StudentAttempt attempt = attemptsService.createAttempt(user, test);
 
         session.setAttribute("attempt", attempt);
-        session.setAttribute("solving_status", "solving");
         navigate(req, resp);
     }
 
-    private void finishTest(HttpServletRequest req, HttpServletResponse resp) {
+    private void finishTest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         AttemptAttributes attributes = attemptAttributesExtractor.extract(req);
 
         StudentAttempt attempt = (StudentAttempt) session.getAttribute("attempt");
-        User user = (User) session.getAttribute("user");
         Test test = (Test) session.getAttribute("solving_test");
 
+        if (attempt == null || test == null) return;
+
         attempt = attemptsService.fillAttempt(attempt, attributes, test);
-        session.setAttribute("attempt", attempt);
+
+        resultsViewService.showTestResults(test, attempt, req, resp);
     }
 
     private void redirectToHomePage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -109,7 +112,6 @@ public class TestSolvingService {
 
     private static void cleanSessionAttributes(HttpSession session) {
         session.removeAttribute("solving_test");
-        session.removeAttribute("solving_status");
         session.removeAttribute("attempt");
     }
 }

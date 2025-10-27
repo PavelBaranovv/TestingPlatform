@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<div class="auth_container">
+<div class="small_container">
     <h1>Регистрация</h1>
     <form method="post">
         <div class="form-group">

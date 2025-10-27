@@ -1,6 +1,7 @@
 package com.javarush.baranov.testingplatform.listener;
 
 import com.javarush.baranov.testingplatform.dao.*;
+import com.javarush.baranov.testingplatform.service.ResultsViewService;
 import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
@@ -46,7 +47,8 @@ public class ContextListener implements ServletContextListener {
         AttemptAttributesExtractor attemptAttributesExtractor = new AttemptAttributesExtractor();
         StudentAttemptDao studentAttemptDao = new StudentAttemptDao(sessionFactory);
         StudentAttemptsService studentAttemptsService = new StudentAttemptsService(studentAttemptDao);
-        TestSolvingService testSolvingService = new TestSolvingService(testDao, attemptAttributesExtractor, studentAttemptsService);
+        ResultsViewService resultsViewService = new ResultsViewService();
+        TestSolvingService testSolvingService = new TestSolvingService(testDao, attemptAttributesExtractor, studentAttemptsService, resultsViewService);
 
         context.setAttribute("testService", testService);
 

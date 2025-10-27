@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Тест: ${sessionScope.solving_test.name}</title>
+    <title>Прохождение теста</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
@@ -37,7 +37,8 @@
                                 <input type="radio"
                                        id="q${qStatus.index}_a${aStatus.index}"
                                        name="question_${question.id}"
-                                       value="${answer.id}">
+                                       value="${answer.id}"
+                                       required>
                                 <label for="q${qStatus.index}_a${aStatus.index}" class="answer-option">
                                         ${answer.text}
                                 </label>
