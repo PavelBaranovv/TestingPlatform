@@ -9,8 +9,10 @@ public class QuestionDao {
 
     private final SessionFactory sessionFactory;
 
-    //TODO: N+1 problem
     public void save(Question question) {
-        sessionFactory.inTransaction((session) -> session.persist(question));
+        sessionFactory.inTransaction((session) -> {
+            session.persist(question);
+            session.flush();
+        });
     }
 }

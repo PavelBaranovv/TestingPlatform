@@ -1,6 +1,6 @@
-package com.javarush.baranov.testingplatform.servlet.auth;
+package com.javarush.baranov.testingplatform.servlet.student;
 
-import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
+import com.javarush.baranov.testingplatform.service.student.TestSolvingService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -11,30 +11,25 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/registration")
-public class RegistrationServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/student/test/*")
+public class TestSolvingServlet extends HttpServlet {
 
-    private AuthenticationService authService;
+    private TestSolvingService solvingService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         ServletContext context = config.getServletContext();
-        authService = (AuthenticationService) context.getAttribute("authenticationService");
+        solvingService = (TestSolvingService) context.getAttribute("testSolvingService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+        solvingService.navigate(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!authService.register(req)) {
-            req.getSession().setAttribute("registration_error", "Такой аккаунт уже существует");
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
-            return;
-        }
-        resp.sendRedirect("/login");
+        solvingService.processChoice(req, resp);
     }
 }

@@ -36,7 +36,7 @@ public class AuthenticationService {
         Credentials credentials = credentialsExtractor.extract(req);
 
         if (authenticationAttemptsService.isBlocked(credentials.login())) {
-            req.setAttribute("login_error", "Слишком много попыток входа. Повторите позже.");
+            req.getSession().setAttribute("login_error", "Слишком много попыток входа. Повторите позже.");
             return null;
         }
 
@@ -44,7 +44,7 @@ public class AuthenticationService {
 
         if (optionalUser.isEmpty() ||
                 !isPasswordCorrect(credentials, optionalUser.get())) {
-            req.setAttribute("login_error", "Неверное имя пользователя или пароль.");
+            req.getSession().setAttribute("login_error", "Неверное имя пользователя или пароль.");
             return null;
         }
 

@@ -34,10 +34,9 @@ public class LoginServlet extends HttpServlet {
         if (role == null) {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } else if (role == Role.TEACHER) {
-            //TODO: replace static references
             resp.sendRedirect(req.getContextPath() + "/teacher/home");
         } else if (role == Role.STUDENT) {
-            resp.sendRedirect(req.getContextPath() + "/student/home.jsp");
+            resp.sendRedirect(req.getContextPath() + "/student/home");
         }
     }
 }

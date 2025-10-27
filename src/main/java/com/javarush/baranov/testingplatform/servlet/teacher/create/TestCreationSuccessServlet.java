@@ -26,11 +26,11 @@ public class TestCreationSuccessServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/teacher/test_creation_success.jsp").forward(req, resp);
-        creationService.clean(req.getSession());
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if (req.getParameter("action") != null && req.getParameter("action").equals("home")) {
+            creationService.clean(req.getSession());
             resp.sendRedirect("/teacher/home");
         }
     }

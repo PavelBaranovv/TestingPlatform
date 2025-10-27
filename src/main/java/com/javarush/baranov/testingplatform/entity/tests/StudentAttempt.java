@@ -36,7 +36,7 @@ public class StudentAttempt {
     private LocalDateTime completedAt;
 
     @Column()
-    private Double score;
+    private Long score;
 
     @Column(name = "is_success")
     private boolean isSuccess;
@@ -44,9 +44,10 @@ public class StudentAttempt {
     @OneToMany(mappedBy = "attempt", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentAnswer> studentAnswers;
 
-    public StudentAttempt(User user, Test test) {
+    public StudentAttempt(User user, Test test, LocalDateTime startedAt) {
         this.user = user;
         this.test = test;
+        this.startedAt = startedAt;
     }
 
     @Override

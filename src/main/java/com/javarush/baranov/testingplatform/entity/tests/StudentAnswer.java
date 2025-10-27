@@ -29,10 +29,14 @@ public class StudentAnswer {
     @JoinColumn(name = "selected_answer_id")
     private AnswerOption selectedAnswer;
 
-    public StudentAnswer(StudentAttempt attempt, Question question, AnswerOption selectedAnswer) {
+    @Column(name = "is_correct")
+    private Boolean isCorrect;
+
+    public StudentAnswer(StudentAttempt attempt, Question question, AnswerOption selectedAnswer, Boolean isCorrect) {
         this.attempt = attempt;
         this.question = question;
         this.selectedAnswer = selectedAnswer;
+        this.isCorrect = isCorrect;
     }
 
     @Override

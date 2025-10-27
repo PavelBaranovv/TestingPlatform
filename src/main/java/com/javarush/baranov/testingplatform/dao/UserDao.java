@@ -2,8 +2,8 @@ package com.javarush.baranov.testingplatform.dao;
 
 import com.javarush.baranov.testingplatform.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
 import java.util.Optional;
 
@@ -17,13 +17,13 @@ public class UserDao {
     }
 
     public Optional<User> findByLogin(String login) {
+        String hql = "from User u where u.login = :login";
 
-        String hql = "FROM User u WHERE u.login = :login";
-
-        return sessionFactory.fromTransaction(session -> {
-            Query<User> query = session.createQuery(hql, User.class);
-            query.setParameter("login", login);
-            return Optional.ofNullable(query.uniqueResult());
-        });
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.createQuery(hql, User.class)
+                    .setParameter("login", login)
+                    .uniqueResult();
+            return Optional.ofNullable(user);
+        }
     }
 }

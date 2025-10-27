@@ -42,10 +42,12 @@
             <a href="${pageContext.request.contextPath}/login">У меня уже есть аккаунт</a>
         </div>
     </form>
+
     <c:if test="${not empty sessionScope.registration_error}">
         <div class="error-message">
             <c:out value="${sessionScope.registration_error}" />
         </div>
+        <c:remove var="registration_error" scope="session"/>
     </c:if>
 </div>
 </body>

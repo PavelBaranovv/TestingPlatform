@@ -1,19 +1,15 @@
 package com.javarush.baranov.testingplatform.listener;
 
-import com.javarush.baranov.testingplatform.dao.AuthenticationAttemptsDao;
-import com.javarush.baranov.testingplatform.dao.QuestionDao;
-import com.javarush.baranov.testingplatform.dao.TestDao;
-import com.javarush.baranov.testingplatform.dao.UserDao;
+import com.javarush.baranov.testingplatform.dao.*;
+import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import com.javarush.baranov.testingplatform.service.UserService;
+import com.javarush.baranov.testingplatform.service.student.TestSolvingService;
 import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingService;
 import com.javarush.baranov.testingplatform.service.teacher.TestCreationService;
 import com.javarush.baranov.testingplatform.service.TestService;
-import com.javarush.baranov.testingplatform.util.BaseTestAttributesExtractor;
-import com.javarush.baranov.testingplatform.util.CredentialsExtractor;
-import com.javarush.baranov.testingplatform.util.HibernateConfig;
-import com.javarush.baranov.testingplatform.util.TestSettingsExtractor;
+import com.javarush.baranov.testingplatform.util.*;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -47,6 +43,11 @@ public class ContextListener implements ServletContextListener {
         QuestionDao questionDao = new QuestionDao(sessionFactory);
         QuestionFillingService questionFillingService = new QuestionFillingService(questionDao, testDao);
 
+        AttemptAttributesExtractor attemptAttributesExtractor = new AttemptAttributesExtractor();
+        StudentAttemptDao studentAttemptDao = new StudentAttemptDao(sessionFactory);
+        StudentAttemptsService studentAttemptsService = new StudentAttemptsService(studentAttemptDao);
+        TestSolvingService testSolvingService = new TestSolvingService(testDao, attemptAttributesExtractor, studentAttemptsService);
+
         context.setAttribute("testService", testService);
 
         context.setAttribute("authenticationService", authService);
@@ -54,5 +55,7 @@ public class ContextListener implements ServletContextListener {
 
         context.setAttribute("testCreationService", testCreationService);
         context.setAttribute("questionFillingService", questionFillingService);
+
+        context.setAttribute("testSolvingService", testSolvingService);
     }
 }
