@@ -2,6 +2,7 @@ package com.javarush.baranov.testingplatform.dao;
 
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.Question;
+import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
 import com.javarush.baranov.testingplatform.enums.TestCreationStatus;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,31 @@ public class TestDao {
                 left join fetch q.answerOptions a
                 join q.test t
                 where t.id = :id""", Question.class)
+                    .setParameter("id", id)
+                    .getResultList();
+
+            return test;
+        }
+    }
+
+    public Test getTestWithAttemptsAndUsers(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            Test test = session.createQuery("""
+                select t
+                from Test t
+                left join fetch t.attempts a
+                where t.id = :id""", Test.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+
+            if (test == null) return null;
+
+            session.createQuery("""
+                select a
+                from StudentAttempt a
+                left join fetch a.user u
+                join a.test t
+                where t.id = :id""", StudentAttempt.class)
                     .setParameter("id", id)
                     .getResultList();
 

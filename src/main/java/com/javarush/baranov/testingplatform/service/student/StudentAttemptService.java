@@ -1,4 +1,4 @@
-package com.javarush.baranov.testingplatform.service;
+package com.javarush.baranov.testingplatform.service.student;
 
 import com.javarush.baranov.testingplatform.dao.StudentAttemptDao;
 import com.javarush.baranov.testingplatform.entity.User;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class StudentAttemptsService {
+public class StudentAttemptService {
 
     private final StudentAttemptDao attemptDao;
 

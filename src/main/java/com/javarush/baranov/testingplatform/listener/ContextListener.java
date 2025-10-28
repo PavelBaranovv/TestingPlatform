@@ -1,12 +1,14 @@
 package com.javarush.baranov.testingplatform.listener;
 
+import com.javarush.baranov.testingplatform.config.HibernateConfig;
 import com.javarush.baranov.testingplatform.dao.*;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
-import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
+import com.javarush.baranov.testingplatform.service.student.StudentAttemptService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import com.javarush.baranov.testingplatform.service.UserService;
 import com.javarush.baranov.testingplatform.service.student.TestSolvingService;
+import com.javarush.baranov.testingplatform.service.teacher.AttemptsViewService;
 import com.javarush.baranov.testingplatform.service.teacher.TeacherHomeService;
 import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingService;
 import com.javarush.baranov.testingplatform.service.teacher.TestCreationService;
@@ -47,13 +49,15 @@ public class ContextListener implements ServletContextListener {
 
         AttemptAttributesExtractor attemptAttributesExtractor = new AttemptAttributesExtractor();
         StudentAttemptDao studentAttemptDao = new StudentAttemptDao(sessionFactory);
-        StudentAttemptsService studentAttemptsService = new StudentAttemptsService(studentAttemptDao);
+        StudentAttemptService studentAttemptService = new StudentAttemptService(studentAttemptDao);
         ResultsViewService resultsViewService = new ResultsViewService();
         TestIdExtractor testIdExtractor = new TestIdExtractor();
         TestSolvingService testSolvingService = new TestSolvingService(testDao, attemptAttributesExtractor,
-                studentAttemptsService, resultsViewService, testIdExtractor);
+                studentAttemptService, resultsViewService, testIdExtractor);
 
         TeacherHomeService teacherHomeService = new TeacherHomeService(testService);
+
+        AttemptsViewService attemptsViewService = new AttemptsViewService(testDao, testIdExtractor);
 
         context.setAttribute("testIdExtractor", testIdExtractor);
 
@@ -68,5 +72,7 @@ public class ContextListener implements ServletContextListener {
         context.setAttribute("testSolvingService", testSolvingService);
 
         context.setAttribute("teacherHomeService", teacherHomeService);
+
+        context.setAttribute("attemptsViewService", attemptsViewService);
     }
 }

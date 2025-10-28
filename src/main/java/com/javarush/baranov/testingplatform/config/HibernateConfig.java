@@ -1,4 +1,4 @@
-package com.javarush.baranov.testingplatform.util;
+package com.javarush.baranov.testingplatform.config;
 
 import com.javarush.baranov.testingplatform.entity.AuthenticationAttempts;
 import com.javarush.baranov.testingplatform.entity.User;

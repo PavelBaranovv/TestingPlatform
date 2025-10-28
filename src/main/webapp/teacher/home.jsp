@@ -12,7 +12,7 @@
     </c:if>
 
     <c:if test="${not empty requestScope.tests}">
-        <h2>Созданные тесты</h2>
+        <h1>Созданные тесты</h1>
         <div class="tests-list">
             <table class="tests-table">
                 <thead>

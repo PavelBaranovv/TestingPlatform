@@ -14,9 +14,9 @@ import java.util.List;
 public class TeacherHomeService {
     private final TestService testService;
 
-    public List<Test> getCreatedTests(HttpServletRequest req) {
-        User user = (User) req.getSession().getAttribute("user");
-        return testService.getTestsByCreator(user);
+    public void setCreatedTestsAttribute(HttpServletRequest req) {
+        List<Test> tests = getCreatedTests(req);
+        req.setAttribute("tests", tests);
     }
 
     public void processChoice(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -35,6 +35,10 @@ public class TeacherHomeService {
         }
     }
 
+    private List<Test> getCreatedTests(HttpServletRequest req) {
+        User user = (User) req.getSession().getAttribute("user");
+        return testService.getTestsByCreator(user);
+    }
 
     private String getTestId(HttpServletRequest req) {
         String test_id = req.getParameter("test_id");

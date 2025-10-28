@@ -433,6 +433,33 @@ a:hover {
     background-color: #161b22;
 }
 
+.success {
+    background: #12261e;
+    border: 3px solid #0d1117;
+}
+
+.success:hover {
+    background: #14331e;
+}
+
+.failed {
+    background: #25171c;
+    border: 3px solid #0d1117;
+}
+
+.failed:hover {
+    background: #371819;
+}
+
+.in-progress {
+    background: #121d2f;
+    border: 3px solid #0d1117;
+}
+
+.in-progress:hover {
+    background: #071b42;
+}
+
 .test-name {
     padding: 12px 10px;
     font-weight: 600;
@@ -463,6 +490,11 @@ a:hover {
     padding: 12px 10px;
     text-align: center;
 }
+
+.center {
+    text-align: center;
+}
+
 
 .btn-results {
     background-color: #238436;

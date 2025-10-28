@@ -5,7 +5,6 @@ import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
-import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
 import com.javarush.baranov.testingplatform.util.AttemptAttributesExtractor;
 import com.javarush.baranov.testingplatform.util.TestIdExtractor;
 import com.javarush.baranov.testingplatform.util.entities.AttemptAttributes;
@@ -22,7 +21,7 @@ public class TestSolvingService {
 
     private final TestDao testDao;
     private final AttemptAttributesExtractor attemptAttributesExtractor;
-    private final StudentAttemptsService attemptsService;
+    private final StudentAttemptService attemptService;
     private final ResultsViewService resultsViewService;
     private final TestIdExtractor idExtractor;
 
@@ -81,7 +80,7 @@ public class TestSolvingService {
         User user = (User) session.getAttribute("user");
         Test test = (Test) session.getAttribute("solving_test");
 
-        StudentAttempt attempt = attemptsService.createAttempt(user, test);
+        StudentAttempt attempt = attemptService.createAttempt(user, test);
 
         session.setAttribute("attempt", attempt);
         navigate(req, resp);
@@ -96,7 +95,7 @@ public class TestSolvingService {
 
         if (attempt == null || test == null) return;
 
-        attempt = attemptsService.fillAttempt(attempt, attributes, test);
+        attempt = attemptService.fillAttempt(attempt, attributes, test);
 
         resultsViewService.showTestResults(test, attempt, req, resp);
     }
