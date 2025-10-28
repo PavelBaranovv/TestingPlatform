@@ -177,7 +177,8 @@ textarea::placeholder {
 }
 
 a {
-    color: #4a90e2;
+    color: #4492f6;
+    cursor: pointer;
     text-decoration: none;
 }
 
@@ -394,4 +395,81 @@ a:hover {
 .question-block .radio-option.correct-answer:not(:has(input[type="radio"]:checked)) {
     border: 1px solid #238436;
     background-color: #101c11;
+}
+
+/* Стили для таблицы тестов */
+.tests-list {
+    margin-bottom: 30px;
+}
+
+.tests-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tests-table th {
+    text-align: left;
+    padding: 12px 10px;
+    color: #ffffff;
+    border-bottom: 1px solid #3d444d;
+    font-weight: 600;
+}
+.test-row {
+    border-bottom: 1px solid #30363d;
+}
+
+.test-row:hover {
+    background-color: #161b22;
+}
+
+.test-name {
+    padding: 12px 10px;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.test-id {
+    padding: 12px 10px;
+}
+
+.id-block-small {
+    background-color: #0d1117;
+    color: #9097a0;
+    padding: 6px 10px;
+    border-radius: 50px;
+    border: 1px solid #3d444d;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    font-weight: 300;
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.test-actions {
+    padding: 12px 10px;
+    text-align: center;
+}
+
+.btn-results {
+    background-color: #238436;
+    border: 1px solid #2e9f43;
+    margin-right: 8px;
+}
+
+.btn-results:hover {
+    background-color: #30ba4b;
+}
+
+.btn-delete {
+    background-color: #212830;
+    border: 1px solid #3d444d;
+}
+
+.btn-delete:hover {
+    background-color: #3a1010;
+    border: 1px solid #6a141a;
 }

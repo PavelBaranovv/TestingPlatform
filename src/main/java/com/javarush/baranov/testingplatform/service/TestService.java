@@ -40,5 +40,7 @@ public class TestService {
         return testDao.getCreatingTests(user);
     }
 
-
+    public List<Test> getTestsByCreator(User createdBy) {
+        return testDao.getUserTests(createdBy, TestCreationStatus.CREATED);
+    }
 }

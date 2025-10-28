@@ -7,6 +7,7 @@ import com.javarush.baranov.testingplatform.service.auth.AuthenticationAttemptsS
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import com.javarush.baranov.testingplatform.service.UserService;
 import com.javarush.baranov.testingplatform.service.student.TestSolvingService;
+import com.javarush.baranov.testingplatform.service.teacher.TeacherHomeService;
 import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingService;
 import com.javarush.baranov.testingplatform.service.teacher.TestCreationService;
 import com.javarush.baranov.testingplatform.service.TestService;
@@ -50,6 +51,8 @@ public class ContextListener implements ServletContextListener {
         ResultsViewService resultsViewService = new ResultsViewService();
         TestSolvingService testSolvingService = new TestSolvingService(testDao, attemptAttributesExtractor, studentAttemptsService, resultsViewService);
 
+        TeacherHomeService teacherHomeService = new TeacherHomeService(testService);
+
         context.setAttribute("testService", testService);
 
         context.setAttribute("authenticationService", authService);
@@ -59,5 +62,7 @@ public class ContextListener implements ServletContextListener {
         context.setAttribute("questionFillingService", questionFillingService);
 
         context.setAttribute("testSolvingService", testSolvingService);
+
+        context.setAttribute("teacherHomeService", teacherHomeService);
     }
 }
