@@ -26,7 +26,7 @@
                 <c:forEach var="test" items="${requestScope.tests}">
                     <tr class="test-row">
                         <td class="test-name">
-                            <a href="${pageContext.request.contextPath}/teacher/test-info/${test.id}">${test.name}</a>
+                            <c:out value="${test.name}"/>
                         </td>
                         <td class="test-id">
                             <div class="id-block-small">${test.id}</div>

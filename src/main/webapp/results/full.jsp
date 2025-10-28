@@ -18,6 +18,12 @@
         </c:choose>
     </h1>
 
+    <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'TEACHER'}">
+        <div class="info-block">
+            <p>Попытка пользователя <c:out value="${requestScope.attempt.user.login}"/></p>
+        </div>
+    </c:if>
+
     <div class="info">
         <h3>Верных ответов: ${requestScope.attempt.score} из ${requestScope.test.questionCount}</h3>
     </div>
@@ -57,6 +63,12 @@
     <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'STUDENT'}">
         <form method="post" class="btn-group">
             <button name="choice" value="home" class="btn">На главную</button>
+        </form>
+    </c:if>
+
+    <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'TEACHER'}">
+        <form method="post" class="btn-group">
+            <button name="choice" value="finish_view" class="btn btn-secondary">Завершить просмотр</button>
         </form>
     </c:if>
 </div>

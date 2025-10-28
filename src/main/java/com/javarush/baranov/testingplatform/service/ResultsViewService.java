@@ -1,7 +1,9 @@
 package com.javarush.baranov.testingplatform.service;
 
+import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
+import com.javarush.baranov.testingplatform.enums.Role;
 import com.javarush.baranov.testingplatform.enums.TestShowResult;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,12 +16,17 @@ public class ResultsViewService {
         req.setAttribute("test", test);
         req.setAttribute("attempt", attempt);
 
-        TestShowResult resultsView = test.getShowResult();
-        switch (resultsView) {
-            case NOTHING -> showThanksPage(req, resp);
-            case ONLY_SCORE -> showScore(req, resp);
-            case ONLY_MISTAKES -> showOnlyMistakesResult(req, resp);
-            case MISTAKES_AND_CORRECTS -> showFullResult(req, resp);
+        User user = (User) req.getSession().getAttribute("user");
+        if (user.getRole() == Role.TEACHER) {
+            showFullResult(req, resp);
+        } else {
+            TestShowResult resultsView = test.getShowResult();
+            switch (resultsView) {
+                case NOTHING -> showThanksPage(req, resp);
+                case ONLY_SCORE -> showScore(req, resp);
+                case ONLY_MISTAKES -> showOnlyMistakesResult(req, resp);
+                case MISTAKES_AND_CORRECTS -> showFullResult(req, resp);
+            }
         }
     }
 

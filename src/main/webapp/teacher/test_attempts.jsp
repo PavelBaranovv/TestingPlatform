@@ -122,9 +122,11 @@
     </c:if>
 
     <div class="btn-group">
-        <button type="submit" class="btn btn-secondary" name="choice" value="home">
-            Назад к списку тестов
-        </button>
+        <form method="post">
+            <button type="submit" class="btn btn-secondary" name="choice" value="home">
+                Назад к списку тестов
+            </button>
+        </form>
     </div>
 </div>
 </body>

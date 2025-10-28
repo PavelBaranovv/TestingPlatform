@@ -27,4 +27,9 @@ public class AttemptsViewServlet extends HttpServlet {
         attemptsViewService.setTestAttribute(req);
         req.getRequestDispatcher("/teacher/test_attempts.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        attemptsViewService.processChoice(req, resp);
+    }
 }

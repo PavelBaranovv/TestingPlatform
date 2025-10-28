@@ -57,7 +57,7 @@ public class ContextListener implements ServletContextListener {
 
         TeacherHomeService teacherHomeService = new TeacherHomeService(testService);
 
-        AttemptsViewService attemptsViewService = new AttemptsViewService(testDao, testIdExtractor);
+        AttemptsViewService attemptsViewService = new AttemptsViewService(testDao, studentAttemptDao, resultsViewService, testIdExtractor);
 
         context.setAttribute("testIdExtractor", testIdExtractor);
 

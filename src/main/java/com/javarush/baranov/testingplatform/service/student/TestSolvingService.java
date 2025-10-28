@@ -80,6 +80,7 @@ public class TestSolvingService {
         User user = (User) session.getAttribute("user");
         Test test = (Test) session.getAttribute("solving_test");
 
+        //TODO Поиск уже начатых попыток в базе
         StudentAttempt attempt = attemptService.createAttempt(user, test);
 
         session.setAttribute("attempt", attempt);
