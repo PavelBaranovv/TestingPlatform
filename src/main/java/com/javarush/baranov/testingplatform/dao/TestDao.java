@@ -69,4 +69,13 @@ public class TestDao {
             return query.getResultList();
         });
     }
+
+    public void deleteTest(String id) {
+        sessionFactory.inTransaction(session -> {
+            Test test = session.get(Test.class, id);
+            if (test != null) {
+                session.remove(test);
+            }
+        });
+    }
 }

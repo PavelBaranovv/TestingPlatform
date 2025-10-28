@@ -7,6 +7,7 @@ import com.javarush.baranov.testingplatform.entity.tests.Test;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
 import com.javarush.baranov.testingplatform.service.StudentAttemptsService;
 import com.javarush.baranov.testingplatform.util.AttemptAttributesExtractor;
+import com.javarush.baranov.testingplatform.util.TestIdExtractor;
 import com.javarush.baranov.testingplatform.util.entities.AttemptAttributes;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class TestSolvingService {
     private final AttemptAttributesExtractor attemptAttributesExtractor;
     private final StudentAttemptsService attemptsService;
     private final ResultsViewService resultsViewService;
+    private final TestIdExtractor idExtractor;
 
     public void navigate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -55,15 +57,9 @@ public class TestSolvingService {
         }
     }
 
-
-    private String extractTestIdFromUri(String uri) {
-        String[] parts = uri.split("/");
-        return parts.length > 0 ? parts[parts.length - 1] : null;
-    }
-
     private Test getTest(HttpServletRequest req) {
         String uri = req.getRequestURI();
-        String id = extractTestIdFromUri(uri);
+        String id = idExtractor.extract(uri);
         if (id == null) return null;
 
         HttpSession session = req.getSession();

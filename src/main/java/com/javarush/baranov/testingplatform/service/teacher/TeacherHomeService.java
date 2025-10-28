@@ -29,7 +29,7 @@ public class TeacherHomeService {
             }
             case "delete_test" -> {
                 String testId = getTestId(req);
-                resp.sendRedirect(req.getContextPath() + "/teacher/delete/" + testId);
+                resp.sendRedirect(req.getContextPath() + "/teacher/delete-test/" + testId);
             }
             case null, default -> resp.sendRedirect(req.getContextPath() + "teacher/home");
         }

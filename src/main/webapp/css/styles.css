@@ -135,6 +135,16 @@ textarea::placeholder {
     background-color: #333d4a;
 }
 
+.btn-warning {
+    background-color: #59111c;
+    border: 1px solid #93222a;
+}
+
+.btn-warning:hover {
+    background-color: #981a1a;
+    border: 1px solid #ba121b;
+}
+
 .btn-small {
     background-color: #212830;
     border: 1px solid #3d444d;

@@ -43,4 +43,8 @@ public class TestService {
     public List<Test> getTestsByCreator(User createdBy) {
         return testDao.getUserTests(createdBy, TestCreationStatus.CREATED);
     }
+
+    public void deteteTest(String id) {
+        testDao.deleteTest(id);
+    }
 }
