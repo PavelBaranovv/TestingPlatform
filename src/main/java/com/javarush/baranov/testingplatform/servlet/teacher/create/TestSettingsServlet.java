@@ -1,6 +1,8 @@
 package com.javarush.baranov.testingplatform.servlet.teacher.create;
 
 
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.teacher.TestCreationService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -12,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/teacher/create-test/settings")
+@WebServlet(urlPatterns = Route.TEACHER_CREATE_TEST_SETTINGS)
 public class TestSettingsServlet extends HttpServlet {
 
     private TestCreationService creationService;
@@ -26,12 +28,12 @@ public class TestSettingsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/teacher/test_settings.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.TEST_SETTINGS_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         creationService.applySettings(req);
-        resp.sendRedirect("/teacher/create-test/success");
+        resp.sendRedirect(Route.TEACHER_CREATE_TEST_SUCCESS);
     }
 }

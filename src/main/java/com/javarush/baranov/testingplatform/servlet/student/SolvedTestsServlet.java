@@ -1,5 +1,7 @@
 package com.javarush.baranov.testingplatform.servlet.student;
 
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.student.SolvedTestsService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -11,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/student/solved")
+@WebServlet(urlPatterns = Route.STUDENT_SOLVED)
 public class SolvedTestsServlet extends HttpServlet {
 
     private SolvedTestsService solvedTestsService;
@@ -26,7 +28,7 @@ public class SolvedTestsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         solvedTestsService.setTestsAttribute(req);
-        req.getRequestDispatcher("/student/solved.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.STUDENT_SOLVED_JSP).forward(req, resp);
     }
 
     @Override

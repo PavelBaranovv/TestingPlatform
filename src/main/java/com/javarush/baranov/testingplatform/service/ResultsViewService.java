@@ -1,5 +1,6 @@
 package com.javarush.baranov.testingplatform.service;
 
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
@@ -11,7 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static com.javarush.baranov.testingplatform.constants.WebResource.RESULTS_THANKS_PAGE_JSP;
+
 public class ResultsViewService {
+
     public void showTestResults(Test test, StudentAttempt attempt, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("test", test);
         req.setAttribute("attempt", attempt);
@@ -31,18 +35,18 @@ public class ResultsViewService {
     }
 
     private void showThanksPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/results/thanks_page.jsp").forward(req, resp);
+        req.getRequestDispatcher(RESULTS_THANKS_PAGE_JSP).forward(req, resp);
     }
 
     private void showScore(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/results/only_score.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.RESULTS_ONLY_SCORE_JSP).forward(req, resp);
     }
 
     private void showOnlyMistakesResult(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/results/only_mistakes.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.RESULTS_ONLY_MISTAKES_JSP).forward(req, resp);
     }
 
     private void showFullResult(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/results/full.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.RESULTS_FULL_JSP).forward(req, resp);
     }
 }

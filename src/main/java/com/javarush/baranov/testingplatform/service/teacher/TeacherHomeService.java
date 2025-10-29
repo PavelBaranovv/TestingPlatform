@@ -1,5 +1,6 @@
 package com.javarush.baranov.testingplatform.service.teacher;
 
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
 import com.javarush.baranov.testingplatform.service.TestService;
@@ -22,16 +23,16 @@ public class TeacherHomeService {
     public void processChoice(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String choice = req.getParameter("choice");
         switch (choice) {
-            case "create_test" -> resp.sendRedirect(req.getContextPath() + "/teacher/create-test/new");
+            case "create_test" -> resp.sendRedirect(req.getContextPath() + Route.TEACHER_CREATE_TEST_NEW);
             case "results" -> {
                 String testId = getTestId(req);
-                resp.sendRedirect(req.getContextPath() + "/teacher/results/" + testId);
+                resp.sendRedirect(req.getContextPath() + Route.TEACHER_TEST_RESULTS + "/" + testId);
             }
             case "delete_test" -> {
                 String testId = getTestId(req);
-                resp.sendRedirect(req.getContextPath() + "/teacher/delete-test/" + testId);
+                resp.sendRedirect(req.getContextPath() + Route.DELETE_TEST + "/" + testId);
             }
-            case null, default -> resp.sendRedirect(req.getContextPath() + "teacher/home");
+            case null, default -> resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
         }
     }
 

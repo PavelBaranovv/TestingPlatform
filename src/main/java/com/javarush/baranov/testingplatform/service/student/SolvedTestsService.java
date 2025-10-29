@@ -1,11 +1,11 @@
 package com.javarush.baranov.testingplatform.service.student;
 
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.dao.StudentAttemptDao;
 import com.javarush.baranov.testingplatform.dao.TestDao;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
-import com.javarush.baranov.testingplatform.enums.TestCreationStatus;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class SolvedTestsService {
         } else if ("finish_view".equals(choice)){
             resp.sendRedirect(req.getRequestURI());
         } else {
-            resp.sendRedirect(req.getContextPath() + "/teacher/home");
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
         }
     }
 }

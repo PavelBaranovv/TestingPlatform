@@ -1,5 +1,7 @@
 package com.javarush.baranov.testingplatform.service.student;
 
+import com.javarush.baranov.testingplatform.constants.WebResource;
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.dao.TestDao;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
@@ -32,16 +34,16 @@ public class TestSolvingService {
 
         if (test == null) {
             session.setAttribute("id_error", "Теста с таким ID не найдено. Убедитесь, что вы ввели его верно");
-            resp.sendRedirect(req.getContextPath() + "/student/home");
+            resp.sendRedirect(req.getContextPath() + Route.STUDENT_HOME);
             return;
         }
 
         StudentAttempt attempt = (StudentAttempt) session.getAttribute("attempt");
 
         if (attempt == null) {
-            req.getRequestDispatcher("/student/test_welcome.jsp").forward(req, resp);
+            req.getRequestDispatcher(WebResource.TEST_WELCOME_JSP).forward(req, resp);
         } else {
-            req.getRequestDispatcher("/student/test_solving.jsp").forward(req, resp);
+            req.getRequestDispatcher(WebResource.TEST_SOLVING_JSP).forward(req, resp);
         }
     }
 
@@ -103,7 +105,7 @@ public class TestSolvingService {
 
     private void redirectToHomePage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         cleanSessionAttributes(req.getSession());
-        resp.sendRedirect(req.getContextPath() + "/student/home");
+        resp.sendRedirect(req.getContextPath() + Route.STUDENT_HOME);
     }
 
     private static void cleanSessionAttributes(HttpSession session) {

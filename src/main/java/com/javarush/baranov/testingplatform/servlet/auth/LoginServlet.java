@@ -1,5 +1,7 @@
 package com.javarush.baranov.testingplatform.servlet.auth;
 
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.enums.Role;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import jakarta.servlet.ServletConfig;
@@ -12,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/login"})
+@WebServlet(urlPatterns = Route.LOGIN)
 public class LoginServlet extends HttpServlet {
     AuthenticationService authService;
 
@@ -25,18 +27,18 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.LOGIN_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Role role = authService.login(req);
         if (role == null) {
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            req.getRequestDispatcher(WebResource.LOGIN_JSP).forward(req, resp);
         } else if (role == Role.TEACHER) {
-            resp.sendRedirect(req.getContextPath() + "/teacher/home");
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
         } else if (role == Role.STUDENT) {
-            resp.sendRedirect(req.getContextPath() + "/student/home");
+            resp.sendRedirect(req.getContextPath() + Route.STUDENT_HOME);
         }
     }
 }

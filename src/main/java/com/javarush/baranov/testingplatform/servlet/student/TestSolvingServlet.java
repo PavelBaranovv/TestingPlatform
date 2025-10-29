@@ -1,5 +1,6 @@
 package com.javarush.baranov.testingplatform.servlet.student;
 
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.service.student.TestSolvingService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -11,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/student/test/*")
+@WebServlet(urlPatterns = Route.STUDENT_TEST + "/*")
 public class TestSolvingServlet extends HttpServlet {
 
     private TestSolvingService solvingService;

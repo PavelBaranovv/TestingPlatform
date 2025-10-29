@@ -1,5 +1,7 @@
 package com.javarush.baranov.testingplatform.servlet.teacher;
 
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.TestService;
 import com.javarush.baranov.testingplatform.util.TestIdExtractor;
 import jakarta.servlet.ServletConfig;
@@ -12,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/teacher/delete-test/*")
+@WebServlet(urlPatterns = Route.DELETE_TEST + "/*")
 public class TestDeleteServlet extends HttpServlet {
 
     private TestService testService;
@@ -27,7 +29,7 @@ public class TestDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/teacher/test_delete_confirm.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.TEST_DELETE_CONFIRM_JSP).forward(req, resp);
     }
 
     @Override
@@ -36,6 +38,6 @@ public class TestDeleteServlet extends HttpServlet {
         if ("confirm".equals(choice)) {
             testService.deteteTest(testIdExtractor.extract(req.getRequestURI()));
         }
-        resp.sendRedirect(req.getContextPath() + "/teacher/home");
+        resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
     }
 }

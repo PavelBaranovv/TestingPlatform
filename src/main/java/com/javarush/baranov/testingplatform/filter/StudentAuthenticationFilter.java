@@ -1,5 +1,6 @@
 package com.javarush.baranov.testingplatform.filter;
 
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.enums.Role;
 import jakarta.servlet.FilterChain;
@@ -14,8 +15,9 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/student/*")
+@WebFilter(urlPatterns = Route.STUDENT + "/*")
 public class StudentAuthenticationFilter extends HttpFilter {
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
@@ -26,11 +28,11 @@ public class StudentAuthenticationFilter extends HttpFilter {
 
         if (user == null) {
             session.setAttribute("login_error", "Вы не авторизованы");
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.sendRedirect(request.getContextPath() + Route.LOGIN);
             return;
         } else if (user.getRole() != Role.STUDENT) {
             if (user.getRole() == Role.TEACHER) {
-                response.sendRedirect(request.getContextPath() + "/teacher/home");
+                response.sendRedirect(request.getContextPath() + Route.TEACHER_HOME);
                 return;
             }
             //TODO: обработка других случаев (перенаправление на страницу ошибки)

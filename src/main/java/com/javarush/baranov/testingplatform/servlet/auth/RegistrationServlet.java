@@ -1,5 +1,7 @@
 package com.javarush.baranov.testingplatform.servlet.auth;
 
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -11,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/registration")
+@WebServlet(urlPatterns = Route.REGISTRATION)
 public class RegistrationServlet extends HttpServlet {
 
     private AuthenticationService authService;
@@ -25,16 +27,16 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.REGISTRATION_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(!authService.register(req)) {
             req.getSession().setAttribute("registration_error", "Такой аккаунт уже существует");
-            req.getRequestDispatcher("/registration.jsp").forward(req, resp);
+            req.getRequestDispatcher(WebResource.REGISTRATION_JSP).forward(req, resp);
             return;
         }
-        resp.sendRedirect("/login");
+        resp.sendRedirect(Route.LOGIN);
     }
 }

@@ -1,5 +1,6 @@
 package com.javarush.baranov.testingplatform.service.teacher;
 
+import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.dao.StudentAttemptDao;
 import com.javarush.baranov.testingplatform.dao.TestDao;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
@@ -41,7 +42,7 @@ public class AttemptsViewService {
         } else if ("finish_view".equals(choice)){
             resp.sendRedirect(req.getRequestURI());
         } else {
-            resp.sendRedirect(req.getContextPath() + "/teacher/home");
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
         }
     }
 }

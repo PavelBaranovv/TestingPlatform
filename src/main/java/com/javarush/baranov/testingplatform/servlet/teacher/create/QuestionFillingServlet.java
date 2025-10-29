@@ -1,6 +1,8 @@
 package com.javarush.baranov.testingplatform.servlet.teacher.create;
 
 import com.javarush.baranov.testingplatform.constants.Configuration;
+import com.javarush.baranov.testingplatform.constants.Route;
+import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
@@ -12,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/teacher/create-test/questions")
+@WebServlet(urlPatterns = Route.TEACHER_CREATE_TEST_QUESTIONS)
 public class QuestionFillingServlet extends HttpServlet {
 
     private QuestionFillingService questionFillingService;
@@ -27,22 +29,22 @@ public class QuestionFillingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute("answers_count", Configuration.DEFAULT_ANSWERS_COUNT);
-        req.getRequestDispatcher("/teacher/question_fill.jsp").forward(req, resp);
+        req.getRequestDispatcher(WebResource.TEACHER_QUESTION_FILLING_JSP).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (questionFillingService.isAnswersCountUpdated(req)) {
-            req.getRequestDispatcher("/teacher/question_fill.jsp").forward(req, resp);
+            req.getRequestDispatcher(WebResource.TEACHER_QUESTION_FILLING_JSP).forward(req, resp);
             return;
         }
 
         questionFillingService.addQuestion(req);
 
         if (questionFillingService.isFinished(req)) {
-            resp.sendRedirect(req.getContextPath() + "/teacher/create-test/settings");
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_CREATE_TEST_SETTINGS);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/teacher/create-test/questions");
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_CREATE_TEST_QUESTIONS);
         }
     }
 }
