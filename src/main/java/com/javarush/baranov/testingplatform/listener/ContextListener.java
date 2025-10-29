@@ -60,7 +60,7 @@ public class ContextListener implements ServletContextListener {
 
         AttemptsViewService attemptsViewService = new AttemptsViewService(testDao, studentAttemptDao, resultsViewService, testIdExtractor);
 
-        SolvedTestsService solvedTestsService = new SolvedTestsService(studentAttemptDao);
+        SolvedTestsService solvedTestsService = new SolvedTestsService(studentAttemptDao, testDao, resultsViewService);
 
         context.setAttribute("testIdExtractor", testIdExtractor);
 

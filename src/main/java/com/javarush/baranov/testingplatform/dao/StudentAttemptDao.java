@@ -21,6 +21,7 @@ public class StudentAttemptDao {
                             from StudentAttempt a
                             left join fetch a.studentAnswers ans
                             left join fetch a.user
+                            left join fetch a.test
                             where a.id = :id
                             """, StudentAttempt.class)
                     .setParameter("id", id)

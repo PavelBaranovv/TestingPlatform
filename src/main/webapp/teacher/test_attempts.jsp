@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<div class="container">
+<div class="container container_wide">
     <h1><c:out value="${requestScope.test.name}"/></h1>
 
     <div class="info-block">

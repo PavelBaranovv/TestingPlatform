@@ -31,6 +31,6 @@ public class SolvedTestsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/student/home");
+        solvedTestsService.processChoice(req, resp);
     }
 }
