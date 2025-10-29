@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<div class="small_container">
+<div class="container container_small">
     <h1>Спасибо!</h1>
     <h3>Ваши ответы на тест <c:out value="${requestScope.test.name}"/> записаны</h3>
 

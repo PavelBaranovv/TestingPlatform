@@ -3,6 +3,7 @@ package com.javarush.baranov.testingplatform.listener;
 import com.javarush.baranov.testingplatform.config.HibernateConfig;
 import com.javarush.baranov.testingplatform.dao.*;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
+import com.javarush.baranov.testingplatform.service.student.SolvedTestsService;
 import com.javarush.baranov.testingplatform.service.student.StudentAttemptService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationAttemptsService;
 import com.javarush.baranov.testingplatform.service.auth.AuthenticationService;
@@ -59,6 +60,8 @@ public class ContextListener implements ServletContextListener {
 
         AttemptsViewService attemptsViewService = new AttemptsViewService(testDao, studentAttemptDao, resultsViewService, testIdExtractor);
 
+        SolvedTestsService solvedTestsService = new SolvedTestsService(studentAttemptDao);
+
         context.setAttribute("testIdExtractor", testIdExtractor);
 
         context.setAttribute("testService", testService);
@@ -74,5 +77,7 @@ public class ContextListener implements ServletContextListener {
         context.setAttribute("teacherHomeService", teacherHomeService);
 
         context.setAttribute("attemptsViewService", attemptsViewService);
+
+        context.setAttribute("solvedTestsService", solvedTestsService);
     }
 }

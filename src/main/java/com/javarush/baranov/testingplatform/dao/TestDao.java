@@ -77,7 +77,7 @@ public class TestDao {
     public List<Test> getUserTests(User user, TestCreationStatus status) {
         String hql = "FROM Test t WHERE t.createdBy = :user AND t.status = :status";
 
-        return sessionFactory.fromTransaction(session -> {
+        return sessionFactory.fromSession(session -> {
             Query<Test> query = session.createQuery(hql, Test.class);
             query.setParameter("user", user);
             query.setParameter("status", status);

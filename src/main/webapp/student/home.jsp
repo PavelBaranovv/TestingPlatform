@@ -26,9 +26,9 @@
         <c:remove var="id_error" scope="session"/>
     </c:if>
 
-    <form>
+    <form method="post">
         <div class="btn-group">
-            <button type="submit" name="choice" value="completed_tests" class="btn btn-secondary">Пройденные тесты</button>
+            <button type="submit" name="choice" value="solved_tests" class="btn btn-secondary">Пройденные тесты</button>
         </div>
     </form>
 

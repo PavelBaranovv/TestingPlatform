@@ -1,10 +1,13 @@
 package com.javarush.baranov.testingplatform.dao;
 
+import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAnswer;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class StudentAttemptDao {
@@ -35,6 +38,20 @@ public class StudentAttemptDao {
                     .getResultList();
 
             return attempt;
+        }
+    }
+
+    public List<StudentAttempt> getAttempts(User student) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("""
+                                select a
+                                from StudentAttempt a
+                                left join fetch a.user u
+                                left join fetch a.test t
+                                where u.id = :id
+                            """, StudentAttempt.class)
+                    .setParameter("id", student.getId())
+                    .getResultList();
         }
     }
 

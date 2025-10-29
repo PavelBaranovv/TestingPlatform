@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-<div class="small_container">
+<div class="container container_small">
     <h1>Вход</h1>
     <form method="post">
         <div class="form-group">
