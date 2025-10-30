@@ -3,10 +3,14 @@ package com.javarush.baranov.testingplatform.config;
 import com.javarush.baranov.testingplatform.entity.AuthenticationAttempts;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.*;
-import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import java.util.Properties;
+import static org.hibernate.cfg.AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS;
+import static org.hibernate.cfg.FetchSettings.DEFAULT_BATCH_FETCH_SIZE;
+import static org.hibernate.cfg.JdbcSettings.*;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_AUTO;
+import static org.hibernate.tool.schema.Action.VALIDATE;
 
 public class HibernateConfig {
     private static SessionFactory sessionFactory;
@@ -30,22 +34,27 @@ public class HibernateConfig {
     }
 
     private static Properties getProperties() {
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setJdbcUrl("jdbc:postgresql://localhost:5432/testing_platform");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("root");
-        dataSource.setMaximumPoolSize(20);
-        dataSource.setConnectionTimeout(30000);
+        Properties properties = new Properties();
+        properties.put(CONNECTION_PROVIDER, "org.hibernate.hikaricp.internal.HikariCPConnectionProvider");
 
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.connection.datasource", dataSource);
-        hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        hibernateProperties.put("hibernate.show_sql", "true");
-        hibernateProperties.put("hibernate.format_sql", "true");
-        hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
-        hibernateProperties.put("hibernate.current_session_context_class", "thread");
-        return hibernateProperties;
+        properties.put("hibernate.hikari.jdbcUrl", "jdbc:postgresql://localhost:5432/testing_platform");
+        properties.put("hibernate.hikari.username", "postgres");
+        properties.put("hibernate.hikari.password", "root");
+        properties.put("hibernate.hikari.connectionTimeout", "20000");
+        properties.put("hibernate.hikari.maximumPoolSize", "20");
+        properties.put("hibernate.hikari.driverClassName", "org.postgresql.Driver");
+
+        properties.put(DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
+        properties.put(CURRENT_SESSION_CONTEXT_CLASS, "thread");
+        properties.put(DEFAULT_BATCH_FETCH_SIZE, "16");
+
+        properties.put(HBM2DDL_AUTO, VALIDATE);
+
+        properties.put(SHOW_SQL, "TRUE");
+        properties.put(FORMAT_SQL, "TRUE");
+        properties.put(HIGHLIGHT_SQL, "TRUE");
+
+        return properties;
     }
 
     private static void addAnnotatedClasses(Configuration configuration) {
