@@ -31,10 +31,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AnswerOption> answerOptions;
 
-    public Question(String text, Test test, List<AnswerOption> answerOptions) {
+    public Question(String text, Test test) {
         this.text = text;
         this.test = test;
-        this.answerOptions = answerOptions;
     }
 
     @Override

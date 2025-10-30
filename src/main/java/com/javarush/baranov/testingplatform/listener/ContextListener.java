@@ -1,6 +1,7 @@
 package com.javarush.baranov.testingplatform.listener;
 
 import com.javarush.baranov.testingplatform.config.HibernateConfig;
+import com.javarush.baranov.testingplatform.config.LiquibaseUpdate;
 import com.javarush.baranov.testingplatform.dao.*;
 import com.javarush.baranov.testingplatform.service.ResultsViewService;
 import com.javarush.baranov.testingplatform.service.student.SolvedTestsService;
@@ -24,9 +25,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
+
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
+
+        LiquibaseUpdate.update();
 
         SessionFactory sessionFactory = HibernateConfig.getSessionFactory();
 

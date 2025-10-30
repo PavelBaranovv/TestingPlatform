@@ -10,9 +10,10 @@ import static org.hibernate.cfg.AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS;
 import static org.hibernate.cfg.FetchSettings.DEFAULT_BATCH_FETCH_SIZE;
 import static org.hibernate.cfg.JdbcSettings.*;
 import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_AUTO;
-import static org.hibernate.tool.schema.Action.VALIDATE;
+import static org.hibernate.tool.schema.Action.*;
 
 public class HibernateConfig {
+
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
@@ -37,9 +38,9 @@ public class HibernateConfig {
         Properties properties = new Properties();
         properties.put(CONNECTION_PROVIDER, "org.hibernate.hikaricp.internal.HikariCPConnectionProvider");
 
-        properties.put("hibernate.hikari.jdbcUrl", "jdbc:postgresql://localhost:5432/testing_platform");
-        properties.put("hibernate.hikari.username", "postgres");
-        properties.put("hibernate.hikari.password", "root");
+        properties.put("hibernate.hikari.jdbcUrl", DatabaseCredentials.URL);
+        properties.put("hibernate.hikari.username", DatabaseCredentials.USERNAME);
+        properties.put("hibernate.hikari.password", DatabaseCredentials.PASSWORD);
         properties.put("hibernate.hikari.connectionTimeout", "20000");
         properties.put("hibernate.hikari.maximumPoolSize", "20");
         properties.put("hibernate.hikari.driverClassName", "org.postgresql.Driver");
