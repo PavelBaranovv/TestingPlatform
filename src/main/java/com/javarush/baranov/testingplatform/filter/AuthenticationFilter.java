@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = Route.STUDENT + "/*")
-public class StudentAuthenticationFilter extends HttpFilter {
+@WebFilter(urlPatterns = {Route.STUDENT + "/*", Route.TEACHER + "/*"})
+public class AuthenticationFilter extends HttpFilter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -30,13 +30,26 @@ public class StudentAuthenticationFilter extends HttpFilter {
             session.setAttribute("login_error", "Вы не авторизованы");
             response.sendRedirect(request.getContextPath() + Route.LOGIN);
             return;
-        } else if (user.getRole() != Role.STUDENT) {
-            if (user.getRole() == Role.TEACHER) {
-                response.sendRedirect(request.getContextPath() + Route.TEACHER_HOME);
-                return;
-            }
+        }
+
+        if (!validateRoute(user.getRole(), request, response)) {
+            return;
         }
 
         chain.doFilter(req, res);
+    }
+
+    private boolean validateRoute(Role role, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String uri = req.getRequestURI();
+
+        if (Role.STUDENT.equals(role) && !uri.contains(Route.STUDENT)) {
+            resp.sendRedirect(req.getContextPath() + Route.STUDENT_HOME);
+            return false;
+        } else if (Role.TEACHER.equals(role) && !uri.contains(Route.TEACHER)) {
+            resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
+            return false;
+        }
+
+        return true;
     }
 }
