@@ -23,7 +23,7 @@ public class SolvedTestsService {
 
     public void setTestsAttribute(HttpServletRequest req) {
         User student = (User) req.getSession().getAttribute("user");
-        List<StudentAttempt> attempts = attemptDao.getAttempts(student);
+        List<StudentAttempt> attempts = attemptDao.getUserAttempts(student);
         req.setAttribute("attempts", attempts);
     }
 
@@ -34,7 +34,7 @@ public class SolvedTestsService {
             String attemptIdStr = req.getParameter("attempt_id");
             Long attemptId = Long.parseLong(attemptIdStr);
 
-            StudentAttempt attempt = attemptDao.getAttemptWithAnswers(attemptId);
+            StudentAttempt attempt = attemptDao.getAttemptWithQuestionsAndAnswers(attemptId);
 
             String testId = attempt.getTest().getId();
 

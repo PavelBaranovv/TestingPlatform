@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class AuthenticationService {
 
@@ -40,17 +38,16 @@ public class AuthenticationService {
             return null;
         }
 
-        Optional<User> optionalUser = userService.getByLogin(credentials.login());
+        User user = userService.getByLogin(credentials.login());
 
-        if (optionalUser.isEmpty() ||
-                !isPasswordCorrect(credentials, optionalUser.get())) {
+        if (user == null || !isPasswordCorrect(credentials, user)) {
             req.getSession().setAttribute("login_error", "Неверное имя пользователя или пароль.");
             return null;
         }
 
         authenticationAttemptsService.resetAttempts(credentials.login());
-        req.getSession().setAttribute("user", optionalUser.get());
-        return optionalUser.get().getRole();
+        req.getSession().setAttribute("user", user);
+        return user.getRole();
     }
 
 

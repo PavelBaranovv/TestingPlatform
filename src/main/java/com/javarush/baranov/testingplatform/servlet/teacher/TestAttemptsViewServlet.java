@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = Route.TEACHER_TEST_RESULTS + "/*")
-public class AttemptsViewServlet extends HttpServlet {
+public class TestAttemptsViewServlet extends HttpServlet {
 
     private AttemptsViewService attemptsViewService;
 

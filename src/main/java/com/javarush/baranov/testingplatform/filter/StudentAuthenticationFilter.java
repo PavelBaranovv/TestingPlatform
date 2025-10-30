@@ -35,7 +35,6 @@ public class StudentAuthenticationFilter extends HttpFilter {
                 response.sendRedirect(request.getContextPath() + Route.TEACHER_HOME);
                 return;
             }
-            //TODO: обработка других случаев (перенаправление на страницу ошибки)
         }
 
         chain.doFilter(req, res);

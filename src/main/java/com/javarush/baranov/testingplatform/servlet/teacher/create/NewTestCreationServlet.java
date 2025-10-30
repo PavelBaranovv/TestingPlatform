@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = Route.TEACHER_CREATE_TEST_NEW)
-public class TestCreationServlet extends HttpServlet {
+public class NewTestCreationServlet extends HttpServlet {
 
     private TestCreationService creationService;
 

@@ -14,13 +14,17 @@ public class AuthenticationAttemptsService {
 
     public boolean isBlocked(String login) {
         AuthenticationAttempts authAttempts = authenticationAttemptsDao.getAuthenticationAttempts(login);
+
         int currentAttempt = authAttempts.getAttempts() + 1;
+        authAttempts.setAttempts(currentAttempt);
+
         if (currentAttempt > MAX_AUTH_ATTEMPTS && !blockTimeIsFinished(authAttempts.getLastAttempt())) {
             return true;
         } else if (currentAttempt >= MAX_AUTH_ATTEMPTS && blockTimeIsFinished(authAttempts.getLastAttempt())) {
-            currentAttempt = 1;
+            authAttempts.setAttempts(1);
         }
-        authenticationAttemptsDao.updateAttempts(login, currentAttempt, LocalDateTime.now());
+
+        authenticationAttemptsDao.updateAttempts(authAttempts);
         return false;
     }
 

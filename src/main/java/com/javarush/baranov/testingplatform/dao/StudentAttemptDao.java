@@ -14,7 +14,7 @@ public class StudentAttemptDao {
 
     private final SessionFactory sessionFactory;
 
-    public StudentAttempt getAttemptWithAnswers(Long id) {
+    public StudentAttempt getAttemptWithQuestionsAndAnswers(Long id) {
         try (Session session = sessionFactory.openSession()) {
             StudentAttempt attempt = session.createQuery("""
                             select a
@@ -42,16 +42,19 @@ public class StudentAttemptDao {
         }
     }
 
-    public List<StudentAttempt> getAttempts(User student) {
+    public List<StudentAttempt> getUserAttempts(User user) {
+
+        String hql = """
+                    select a
+                    from StudentAttempt a
+                    left join fetch a.user u
+                    left join fetch a.test t
+                    where u.id = :id
+                """;
+
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("""
-                                select a
-                                from StudentAttempt a
-                                left join fetch a.user u
-                                left join fetch a.test t
-                                where u.id = :id
-                            """, StudentAttempt.class)
-                    .setParameter("id", student.getId())
+            return session.createQuery(hql, StudentAttempt.class)
+                    .setParameter("id", user.getId())
                     .getResultList();
         }
     }

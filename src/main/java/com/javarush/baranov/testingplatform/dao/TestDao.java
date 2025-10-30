@@ -8,7 +8,7 @@ import com.javarush.baranov.testingplatform.enums.TestCreationStatus;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,21 +23,21 @@ public class TestDao {
     public Test getTestWithQuestions(String id) {
         try (Session session = sessionFactory.openSession()) {
             Test test = session.createQuery("""
-                select t
-                from Test t
-                left join fetch t.questions q
-                where t.id = :id""", Test.class)
+                            select t
+                            from Test t
+                            left join fetch t.questions q
+                            where t.id = :id""", Test.class)
                     .setParameter("id", id)
                     .uniqueResult();
 
             if (test == null) return null;
 
             session.createQuery("""
-                select q
-                from Question q
-                left join fetch q.answerOptions a
-                join q.test t
-                where t.id = :id""", Question.class)
+                            select q
+                            from Question q
+                            left join fetch q.answerOptions a
+                            join q.test t
+                            where t.id = :id""", Question.class)
                     .setParameter("id", id)
                     .getResultList();
 
@@ -48,21 +48,21 @@ public class TestDao {
     public Test getTestWithAttemptsAndUsers(String id) {
         try (Session session = sessionFactory.openSession()) {
             Test test = session.createQuery("""
-                select t
-                from Test t
-                left join fetch t.attempts a
-                where t.id = :id""", Test.class)
+                            select t
+                            from Test t
+                            left join fetch t.attempts a
+                            where t.id = :id""", Test.class)
                     .setParameter("id", id)
                     .uniqueResult();
 
             if (test == null) return null;
 
             session.createQuery("""
-                select a
-                from StudentAttempt a
-                left join fetch a.user u
-                join a.test t
-                where t.id = :id""", StudentAttempt.class)
+                            select a
+                            from StudentAttempt a
+                            left join fetch a.user u
+                            join a.test t
+                            where t.id = :id""", StudentAttempt.class)
                     .setParameter("id", id)
                     .getResultList();
 
@@ -70,30 +70,34 @@ public class TestDao {
         }
     }
 
-    public void update(Test test) {
-        sessionFactory.inTransaction(session -> session.merge(test));
-    }
-
     public List<Test> getUserTests(User user, TestCreationStatus status) {
+
         String hql = "FROM Test t WHERE t.createdBy = :user AND t.status = :status";
 
-        return sessionFactory.fromSession(session -> {
-            Query<Test> query = session.createQuery(hql, Test.class);
-            query.setParameter("user", user);
-            query.setParameter("status", status);
-            return query.getResultList();
-        });
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(hql, Test.class)
+                    .setParameter("user", user)
+                    .setParameter("status", status)
+                    .getResultList();
+        }
     }
 
+
     public List<Test> getCreatingTests(User user) {
+
         String hql = "FROM Test t WHERE t.createdBy = :user AND t.status != :status";
 
-        return sessionFactory.fromTransaction(session -> {
-            Query<Test> query = session.createQuery(hql, Test.class);
-            query.setParameter("user", user);
-            query.setParameter("status", TestCreationStatus.CREATED);
-            return query.getResultList();
-        });
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(hql, Test.class)
+                    .setParameter("user", user)
+                    .setParameter("status", TestCreationStatus.CREATED)
+                    .getResultList();
+        }
+    }
+
+
+    public void update(Test test) {
+        sessionFactory.inTransaction(session -> session.merge(test));
     }
 
     public void deleteTest(String id) {

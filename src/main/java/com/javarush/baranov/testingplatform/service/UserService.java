@@ -5,7 +5,6 @@ import com.javarush.baranov.testingplatform.util.entities.Credentials;
 import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.enums.Role;
 import lombok.RequiredArgsConstructor;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class UserService {
@@ -20,12 +19,12 @@ public class UserService {
         userDao.save(user);
     }
 
-    public Optional<User> getByLogin(String login) {
+    public User getByLogin(String login) {
         return userDao.findByLogin(login);
     }
 
     public boolean isExist(String login) {
-        Optional<User> user = userDao.findByLogin(login);
-        return user.isPresent();
+        User user = userDao.findByLogin(login);
+        return user != null;
     }
 }

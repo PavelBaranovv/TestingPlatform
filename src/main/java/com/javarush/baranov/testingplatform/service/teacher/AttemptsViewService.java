@@ -36,7 +36,7 @@ public class AttemptsViewService {
             Long attemptId = Long.parseLong(attemptIdStr);
 
             Test test = testDao.getTestWithQuestions(testId);
-            StudentAttempt attempt = attemptDao.getAttemptWithAnswers(attemptId);
+            StudentAttempt attempt = attemptDao.getAttemptWithQuestionsAndAnswers(attemptId);
 
             resultsViewService.showTestResults(test, attempt, req, resp);
         } else if ("finish_view".equals(choice)){

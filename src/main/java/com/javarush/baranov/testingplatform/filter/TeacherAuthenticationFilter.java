@@ -27,7 +27,7 @@ public class TeacherAuthenticationFilter extends HttpFilter {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            request.getSession().setAttribute("login_error", "Вы не авторизованы");
+            session.setAttribute("login_error", "Вы не авторизованы");
             response.sendRedirect(request.getContextPath() + Route.LOGIN);
             return;
         } else if (user.getRole() != Role.TEACHER) {
@@ -35,7 +35,6 @@ public class TeacherAuthenticationFilter extends HttpFilter {
                 response.sendRedirect(request.getContextPath() + Route.STUDENT_HOME);
                 return;
             }
-            //TODO: обработка других случаев (перенаправление на страницу ошибки)
         }
 
         chain.doFilter(req, res);
