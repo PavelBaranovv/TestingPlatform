@@ -29,11 +29,11 @@
         </div>
     </form>
 
-    <c:if test="${not empty sessionScope.login_error}">
+    <c:if test="${not empty sessionScope.error_message}">
         <div class="error-message">
-            <c:out value="${sessionScope.login_error}" />
+            <c:out value="${sessionScope.error_message}" />
         </div>
-        <c:remove var="login_error" scope="session"/>
+        <c:remove var="error_message" scope="session"/>
     </c:if>
 </div>
 </body>

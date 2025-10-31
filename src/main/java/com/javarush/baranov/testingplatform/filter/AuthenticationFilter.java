@@ -27,7 +27,7 @@ public class AuthenticationFilter extends HttpFilter {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            session.setAttribute("login_error", "Вы не авторизованы");
+            session.setAttribute("error_message", "Вы не авторизованы");
             response.sendRedirect(request.getContextPath() + Route.LOGIN);
             return;
         }

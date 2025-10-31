@@ -16,6 +16,7 @@ import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingServi
 import com.javarush.baranov.testingplatform.service.teacher.TestCreationService;
 import com.javarush.baranov.testingplatform.service.TestService;
 import com.javarush.baranov.testingplatform.util.*;
+import com.javarush.baranov.testingplatform.util.validator.CredentialsValidator;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -41,8 +42,10 @@ public class ContextListener implements ServletContextListener {
         CredentialsExtractor credentialsExtractor = new CredentialsExtractor();
         AuthenticationAttemptsDao authAttemptsDao = new AuthenticationAttemptsDao(sessionFactory);
         AuthenticationAttemptsService authAttemptsService = new AuthenticationAttemptsService(authAttemptsDao);
+        CredentialsValidator credentialsValidator = new CredentialsValidator();
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        AuthenticationService authService = new AuthenticationService(userService, authAttemptsService, credentialsExtractor, encoder);
+
+        AuthenticationService authService = new AuthenticationService(userService, authAttemptsService, credentialsExtractor, credentialsValidator, encoder);
 
         TestDao testDao = new TestDao(sessionFactory);
         BaseTestAttributesExtractor baseAttributesExtractor = new BaseTestAttributesExtractor();

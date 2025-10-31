@@ -15,11 +15,29 @@
             </label>
         </div>
 
+        <c:if test="${not empty requestScope.login_violations}">
+            <div class="error-message">
+                <c:forEach var="violation" items="${requestScope.login_violations}">
+                    ${violation}<br>
+                </c:forEach>
+            </div>
+        </c:if>
+
         <div class="form-group">
             <label>Пароль:
             <input type="password" id="password" name="password" required>
             </label>
         </div>
+
+
+        <c:if test="${not empty requestScope.password_violations}">
+            <div class="error-message">
+                <c:forEach var="violation" items="${requestScope.password_violations}">
+                    ${violation}<br>
+                </c:forEach>
+            </div>
+        </c:if>
+
 
         <div class="form-group">
             <label>Кто вы?</label>
@@ -43,11 +61,10 @@
         </div>
     </form>
 
-    <c:if test="${not empty sessionScope.registration_error}">
+    <c:if test="${not empty requestScope.error_message}">
         <div class="error-message">
-            <c:out value="${sessionScope.registration_error}" />
+            <c:out value="${requestScope.error_message}" />
         </div>
-        <c:remove var="registration_error" scope="session"/>
     </c:if>
 </div>
 </body>

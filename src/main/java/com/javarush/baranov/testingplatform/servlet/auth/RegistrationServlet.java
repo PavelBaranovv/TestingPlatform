@@ -33,7 +33,6 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(!authService.register(req)) {
-            req.getSession().setAttribute("registration_error", "Такой аккаунт уже существует");
             req.getRequestDispatcher(WebResource.REGISTRATION_JSP).forward(req, resp);
             return;
         }
