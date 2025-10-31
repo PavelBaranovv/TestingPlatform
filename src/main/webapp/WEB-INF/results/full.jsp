@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -6,6 +6,7 @@
     <title>Результаты теста</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
 <div class="container">
 
@@ -16,6 +17,12 @@
             <c:otherwise>не пройден!</c:otherwise>
         </c:choose>
     </h1>
+
+    <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'TEACHER'}">
+        <div class="info-block">
+            <p>Попытка пользователя <c:out value="${requestScope.attempt.user.login}"/></p>
+        </div>
+    </c:if>
 
     <div class="info">
         <h3>Верных ответов: ${requestScope.attempt.score} из ${requestScope.test.questionCount}</h3>
@@ -36,7 +43,8 @@
                 <div class="radio-group">
                     <c:forEach var="answer" items="${question.answerOptions}" varStatus="aStatus">
                         <div class="radio-option
-                                    ${answer.id == studentAnswer.selectedAnswer.id ? (studentAnswer.isCorrect ? 'correct' : 'incorrect') : ''}">
+                            ${answer.id == studentAnswer.selectedAnswer.id ? (studentAnswer.isCorrect ? 'correct' : 'incorrect') : ''}
+                            ${answer.isCorrect ? 'correct-answer' : ''}">
                             <input type="radio"
                                    id="q${status.index}_a${aStatus.index}"
                                    disabled
@@ -55,6 +63,12 @@
     <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'STUDENT'}">
         <form method="post" class="btn-group">
             <button name="choice" value="home" class="btn">На главную</button>
+        </form>
+    </c:if>
+
+    <c:if test="${not empty sessionScope.user and sessionScope.user.role == 'TEACHER'}">
+        <form method="post" class="btn-group">
+            <button name="choice" value="finish_view" class="btn btn-secondary">Завершить просмотр</button>
         </form>
     </c:if>
 </div>

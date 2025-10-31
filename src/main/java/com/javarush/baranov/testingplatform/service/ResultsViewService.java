@@ -5,7 +5,7 @@ import com.javarush.baranov.testingplatform.entity.User;
 import com.javarush.baranov.testingplatform.entity.tests.StudentAttempt;
 import com.javarush.baranov.testingplatform.entity.tests.Test;
 import com.javarush.baranov.testingplatform.enums.Role;
-import com.javarush.baranov.testingplatform.enums.TestShowResult;
+import com.javarush.baranov.testingplatform.enums.TestResultView;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public class ResultsViewService {
         if (user.getRole() == Role.TEACHER) {
             showFullResult(req, resp);
         } else {
-            TestShowResult resultsView = test.getShowResult();
+            TestResultView resultsView = test.getShowResult();
             switch (resultsView) {
                 case NOTHING -> showThanksPage(req, resp);
                 case ONLY_SCORE -> showScore(req, resp);

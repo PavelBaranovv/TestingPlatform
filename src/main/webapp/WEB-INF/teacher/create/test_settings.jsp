@@ -1,11 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Настройка теста</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
 <div class="container">
+
     <h1>Тест почти готов!</h1>
 
     <div class="info">

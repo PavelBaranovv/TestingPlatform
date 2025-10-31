@@ -20,11 +20,11 @@ public class UserService {
     }
 
     public User getByLogin(String login) {
-        return userDao.findByLogin(login);
+        return userDao.getByLogin(login);
     }
 
     public boolean isExist(String login) {
-        User user = userDao.findByLogin(login);
+        User user = userDao.getByLogin(login);
         return user != null;
     }
 }

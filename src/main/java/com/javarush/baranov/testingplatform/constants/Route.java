@@ -16,7 +16,7 @@ public interface Route {
     String TEACHER_CREATE_TEST_NEW = TEACHER_CREATE_TEST + "/new";
     String TEACHER_CREATE_TEST_QUESTIONS = TEACHER_CREATE_TEST + "/questions";
     String TEACHER_CREATE_TEST_SETTINGS = TEACHER_CREATE_TEST +"/settings";
-    String TEACHER_CREATE_TEST_SUCCESS = TEACHER_CREATE_TEST + "/success";
+    String TEACHER_CREATE_TEST_SUCCESS = TEACHER_CREATE_TEST + "/attempt-row-success";
 
     String TEACHER_TEST_RESULTS = TEACHER + "/results";
     String DELETE_TEST = TEACHER + "/delete-test";

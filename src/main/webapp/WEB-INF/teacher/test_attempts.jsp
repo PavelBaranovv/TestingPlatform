@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -7,8 +7,10 @@
     <title>Результаты теста</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
-<div class="container container_wide">
+<div class="container container-wide">
+
     <h1><c:out value="${requestScope.test.name}"/></h1>
 
     <div class="info-block">
@@ -23,28 +25,31 @@
     </div>
 
     <c:if test="${not empty requestScope.test.attempts}">
+
         <h2>Попытки прохождения:</h2>
-            <table class="tests-table">
+
+            <table class="table">
                 <thead>
-                <tr>
-                    <th>Пользователь</th>
-                    <th>Начало</th>
-                    <th>Окончание</th>
-                    <th>Результат</th>
-                    <th>Статус</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Начало</th>
+                        <th>Окончание</th>
+                        <th>Результат</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
                 </thead>
+
                 <tbody>
                 <c:forEach var="attempt" items="${requestScope.test.attempts}">
                     <tr class="test-row
-                                ${attempt.completedAt == null ? 'in-progress' : attempt.success ? 'success' : 'failed'}">
+                                ${attempt.completedAt == null ? 'row-in-progress' : attempt.success ? 'row-success' : 'row-failed'}">
 
-                        <td class="test-name">
+                        <td class="table-text">
                                 ${attempt.user.login != null ? attempt.user.login : 'Неизвестно'}
                         </td>
 
-                        <td class="test-name">
+                        <td class="table-text">
                             <c:choose>
                                 <c:when test="${attempt.startedAt != null}">
                                     <fmt:parseDate value="${attempt.startedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedStartedAt"/>
@@ -56,7 +61,7 @@
                             </c:choose>
                         </td>
 
-                        <td class="test-name">
+                        <td class="table-text">
                             <c:choose>
                                 <c:when test="${attempt.completedAt != null}">
                                     <fmt:parseDate value="${attempt.completedAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedCompletedAt"/>
@@ -68,7 +73,7 @@
                             </c:choose>
                         </td>
 
-                        <td class="test-name">
+                        <td class="table-text">
                             <c:if test="${attempt.score != null}">
                                 ${attempt.score}
                                 <c:if test="${requestScope.test.questionCount != null}">
@@ -79,7 +84,8 @@
                                 –
                             </c:if>
                         </td>
-                        <td class="test-name">
+
+                        <td class="table-text">
                             <c:choose>
                                 <c:when test="${attempt.completedAt != null}">
                                     <c:choose>
@@ -96,7 +102,8 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                        <td class="test-actions">
+
+                        <td class="table-actions">
                             <c:if test="${attempt.completedAt != null}">
                                 <form method="post">
                                     <input type="hidden" name="attempt_id" value="${attempt.id}">

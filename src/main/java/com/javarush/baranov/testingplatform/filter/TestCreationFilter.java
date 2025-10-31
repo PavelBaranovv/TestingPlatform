@@ -9,7 +9,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 import lombok.RequiredArgsConstructor;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,14 +39,14 @@ public class TestCreationFilter extends HttpFilter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
 
-        validateTestAttribute(session);
+        checkTestAttribute(session);
 
         if(validateURI(request, response)) {
             chain.doFilter(req, res);
         }
     }
 
-    private void validateTestAttribute(HttpSession session) {
+    private void checkTestAttribute(HttpSession session) {
         Test test = (Test) session.getAttribute("creating_test");
         if (test == null) {
             User user = (User) session.getAttribute("user");

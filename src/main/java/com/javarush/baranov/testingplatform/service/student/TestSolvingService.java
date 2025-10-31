@@ -33,7 +33,7 @@ public class TestSolvingService {
         HttpSession session = req.getSession();
 
         if (test == null) {
-            session.setAttribute("id_error", "Теста с таким ID не найдено. Убедитесь, что вы ввели его верно");
+            session.setAttribute("error_message", "Теста с таким ID не найдено. Убедитесь, что вы ввели его верно");
             resp.sendRedirect(req.getContextPath() + Route.STUDENT_HOME);
             return;
         }
@@ -41,6 +41,7 @@ public class TestSolvingService {
         StudentAttempt attempt = (StudentAttempt) session.getAttribute("attempt");
 
         if (attempt == null) {
+
             req.getRequestDispatcher(WebResource.TEST_WELCOME_JSP).forward(req, resp);
         } else {
             req.getRequestDispatcher(WebResource.TEST_SOLVING_JSP).forward(req, resp);
@@ -82,8 +83,7 @@ public class TestSolvingService {
         User user = (User) session.getAttribute("user");
         Test test = (Test) session.getAttribute("solving_test");
 
-        //TODO Поиск уже начатых попыток в базе
-        StudentAttempt attempt = attemptService.createAttempt(user, test);
+        StudentAttempt attempt = attemptService.createOrGetAttempt(user, test);
 
         session.setAttribute("attempt", attempt);
         navigate(req, resp);

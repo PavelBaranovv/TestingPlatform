@@ -1,13 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Регистрация</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
 <div class="container container-small">
+
     <h1>Регистрация</h1>
+
     <form method="post">
         <div class="form-group">
             <label>Логин:
@@ -29,7 +32,6 @@
             </label>
         </div>
 
-
         <c:if test="${not empty requestScope.password_violations}">
             <div class="error-message">
                 <c:forEach var="violation" items="${requestScope.password_violations}">
@@ -37,7 +39,6 @@
                 </c:forEach>
             </div>
         </c:if>
-
 
         <div class="form-group">
             <label>Кто вы?</label>

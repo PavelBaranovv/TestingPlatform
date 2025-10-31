@@ -58,9 +58,7 @@ public class QuestionFillingService {
         String questionText = req.getParameter("questionText");
         Test test = (Test) req.getSession().getAttribute("creating_test");
 
-        Question question = new Question();
-        question.setText(questionText);
-        question.setTest(test);
+        Question question = new Question(questionText, test);
 
         List<AnswerOption> answerOptions = parseAnswerOptions(req, question);
         question.setAnswerOptions(answerOptions);

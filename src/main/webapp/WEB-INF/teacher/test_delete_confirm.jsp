@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -8,6 +8,7 @@
 
 <body>
     <div class="container">
+
         <h1>Вы уверены, что хотите удалить тест?</h1>
 
         <div class="error-message">
@@ -20,6 +21,7 @@
                 <button type="submit" class="btn btn-secondary" name="choice" value="cancel">Отменить</button>
             </form>
         </div>
+
     </div>
 </body>
 </html>

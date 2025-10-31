@@ -1,6 +1,6 @@
 package com.javarush.baranov.testingplatform.servlet.teacher.create;
 
-import com.javarush.baranov.testingplatform.constants.Configuration;
+import com.javarush.baranov.testingplatform.constants.AppSettings;
 import com.javarush.baranov.testingplatform.constants.Route;
 import com.javarush.baranov.testingplatform.constants.WebResource;
 import com.javarush.baranov.testingplatform.service.teacher.QuestionFillingService;
@@ -28,7 +28,7 @@ public class QuestionFillingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().setAttribute("answers_count", Configuration.DEFAULT_ANSWERS_COUNT);
+        req.getSession().setAttribute("answers_count", AppSettings.DEFAULT_ANSWERS_COUNT);
         req.getRequestDispatcher(WebResource.TEACHER_QUESTION_FILLING_JSP).forward(req, resp);
     }
 

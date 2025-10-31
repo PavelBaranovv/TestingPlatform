@@ -10,7 +10,7 @@ public class UserDao {
 
     private final SessionFactory sessionFactory;
 
-    public User findByLogin(String login) {
+    public User getByLogin(String login) {
         String hql = "from User u where u.login = :login";
 
         try (Session session = sessionFactory.openSession()) {

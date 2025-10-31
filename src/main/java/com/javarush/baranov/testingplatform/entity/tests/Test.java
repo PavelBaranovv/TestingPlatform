@@ -1,7 +1,7 @@
 package com.javarush.baranov.testingplatform.entity.tests;
 
 import com.javarush.baranov.testingplatform.entity.User;
-import com.javarush.baranov.testingplatform.enums.TestShowResult;
+import com.javarush.baranov.testingplatform.enums.TestResultView;
 import com.javarush.baranov.testingplatform.enums.TestCreationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Test {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "show_result")
-    TestShowResult showResult;
+    TestResultView showResult;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "creation_status")

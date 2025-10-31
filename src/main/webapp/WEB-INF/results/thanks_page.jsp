@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -6,8 +6,10 @@
     <title>Результаты теста</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
-<div class="container container_small">
+<div class="container container-small">
+
     <h1>Спасибо!</h1>
     <h3>Ваши ответы на тест <c:out value="${requestScope.test.name}"/> записаны</h3>
 

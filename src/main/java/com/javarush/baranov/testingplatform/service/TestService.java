@@ -30,7 +30,7 @@ public class TestService {
 
     public void updateTestSettings(Test test, TestSettings testSettings) {
         test.setNeedToAnswer(testSettings.needToAnswer());
-        test.setShowResult(testSettings.showResult());
+        test.setShowResult(testSettings.resultView());
         test.setCreatedAt(LocalDateTime.now());
         test.setStatus(TestCreationStatus.CREATED);
         testDao.update(test);
@@ -44,7 +44,7 @@ public class TestService {
         return testDao.getUserTests(createdBy, TestCreationStatus.CREATED);
     }
 
-    public void deteteTest(String id) {
+    public void deleteTest(String id) {
         testDao.deleteTest(id);
     }
 }

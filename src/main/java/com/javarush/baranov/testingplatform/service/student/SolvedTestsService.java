@@ -29,20 +29,21 @@ public class SolvedTestsService {
 
     public void processChoice(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String choice = req.getParameter("choice");
-        if ("view_attempt".equals(choice)) {
 
+        if ("view_attempt".equals(choice)) {
             String attemptIdStr = req.getParameter("attempt_id");
             Long attemptId = Long.parseLong(attemptIdStr);
 
             StudentAttempt attempt = attemptDao.getAttemptWithQuestionsAndAnswers(attemptId);
 
             String testId = attempt.getTest().getId();
-
-            Test test = testDao.getTestWithQuestions(testId);
+            Test test = testDao.getTest(testId);
 
             resultsViewService.showTestResults(test, attempt, req, resp);
+
         } else if ("finish_view".equals(choice)){
             resp.sendRedirect(req.getRequestURI());
+
         } else {
             resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
         }

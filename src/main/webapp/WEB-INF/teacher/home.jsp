@@ -1,37 +1,45 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
+
 <body>
 <div class="container">
+
     <c:if test="${empty requestScope.tests}">
         <h1>Добро пожаловать!</h1>
     </c:if>
 
     <c:if test="${not empty requestScope.tests}">
+
         <h1>Созданные тесты</h1>
+
         <div class="tests-list">
-            <table class="tests-table">
+            <table class="table">
                 <thead>
-                <tr>
-                    <th>Имя теста</th>
-                    <th>ID</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Имя теста</th>
+                        <th>ID</th>
+                        <th></th>
+                    </tr>
                 </thead>
+
                 <tbody>
                 <c:forEach var="test" items="${requestScope.tests}">
-                    <tr class="test-row">
-                        <td class="test-name">
+                    <tr class="table-row">
+
+                        <td class="table-text">
                             <c:out value="${test.name}"/>
                         </td>
-                        <td class="test-id">
+
+                        <td class="table-id">
                             <div class="id-block-small">${test.id}</div>
                         </td>
-                        <td class="test-actions">
+
+                        <td class="table-actions">
                             <form method="post">
 
                                 <input type="hidden" name="test_id" value="${test.id}">
@@ -39,11 +47,9 @@
                                 <button type="submit" class="btn-small btn-results" name="choice" value="results">
                                     Результаты
                                 </button>
-
                                 <button type="submit" class="btn-small btn-delete" name="choice" value="delete_test">
                                     Удалить
                                 </button>
-
                             </form>
                         </td>
                     </tr>

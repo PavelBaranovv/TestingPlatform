@@ -5,8 +5,8 @@ import com.javarush.baranov.testingplatform.entity.AuthenticationAttempts;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import static com.javarush.baranov.testingplatform.constants.Configuration.BAN_TIME;
-import static com.javarush.baranov.testingplatform.constants.Configuration.MAX_AUTH_ATTEMPTS;
+import static com.javarush.baranov.testingplatform.constants.AppSettings.BAN_TIME;
+import static com.javarush.baranov.testingplatform.constants.AppSettings.MAX_AUTH_ATTEMPTS;
 
 @RequiredArgsConstructor
 public class AuthenticationAttemptsService {

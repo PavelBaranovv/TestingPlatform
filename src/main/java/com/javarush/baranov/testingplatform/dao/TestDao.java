@@ -20,6 +20,16 @@ public class TestDao {
         sessionFactory.inTransaction((session) -> session.persist(test));
     }
 
+    public Test getTest(String id) {
+        String hql = "FROM Test t WHERE t.id = :id";
+
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(hql, Test.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        }
+    }
+
     public Test getTestWithQuestions(String id) {
         try (Session session = sessionFactory.openSession()) {
             Test test = session.createQuery("""

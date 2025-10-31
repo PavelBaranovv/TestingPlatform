@@ -36,7 +36,7 @@ public class TestDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String choice = req.getParameter("choice");
         if ("confirm".equals(choice)) {
-            testService.deteteTest(testIdExtractor.extract(req.getRequestURI()));
+            testService.deleteTest(testIdExtractor.extract(req.getRequestURI()));
         }
         resp.sendRedirect(req.getContextPath() + Route.TEACHER_HOME);
     }

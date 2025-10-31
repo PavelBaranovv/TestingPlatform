@@ -16,10 +16,20 @@ public class StudentAttemptService {
 
     private final StudentAttemptDao attemptDao;
 
-    public StudentAttempt createAttempt(User student, Test test) {
-        StudentAttempt attempt = new StudentAttempt(student, test, LocalDateTime.now());
-        attemptDao.save(attempt);
-        return attempt;
+    public StudentAttempt createOrGetAttempt(User student, Test test) {
+
+        StudentAttempt unfinished_attempt = attemptDao.getUserAttempts(student).stream()
+                .filter(a -> a.getCompletedAt() == null)
+                .findAny()
+                .orElse(null);
+
+        if (unfinished_attempt != null) {
+            return unfinished_attempt;
+        } else {
+            StudentAttempt attempt = new StudentAttempt(student, test, LocalDateTime.now());
+            attemptDao.save(attempt);
+            return attempt;
+        }
     }
 
     public StudentAttempt fillAttempt(StudentAttempt attempt, AttemptAttributes attributes, Test test) {

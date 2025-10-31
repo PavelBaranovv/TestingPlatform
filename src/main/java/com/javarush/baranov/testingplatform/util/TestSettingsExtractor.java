@@ -1,6 +1,6 @@
 package com.javarush.baranov.testingplatform.util;
 
-import com.javarush.baranov.testingplatform.enums.TestShowResult;
+import com.javarush.baranov.testingplatform.enums.TestResultView;
 import com.javarush.baranov.testingplatform.util.entities.TestSettings;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -15,7 +15,7 @@ public class TestSettingsExtractor {
         }
 
         int needToAnswer = Integer.parseInt(needToAnswerStr);
-        TestShowResult showResult = TestShowResult.valueOf(showResultStr);
+        TestResultView showResult = TestResultView.valueOf(showResultStr);
 
         return new TestSettings(needToAnswer, showResult);
     }
