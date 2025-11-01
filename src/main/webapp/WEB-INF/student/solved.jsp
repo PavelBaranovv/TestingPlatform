@@ -29,7 +29,9 @@
             <tbody>
             <c:forEach var="attempt" items="${requestScope.attempts}">
                 <tr class="test-row
-                                ${attempt.completedAt == null ? 'row-in-progress' : attempt.success ? 'row-success' : 'row-failed'}">
+                                ${attempt.test.showResult == 'NOTHING' ? '' :
+                                attempt.completedAt == null ? 'row-in-progress' :
+                                attempt.success ? 'row-success' : 'row-failed'}">
 
                     <td class="table-text">
                             ${attempt.test.name != null ? attempt.test.name : 'Без названия'}
@@ -60,19 +62,24 @@
                     </td>
 
                     <td class="table-text">
-                        <c:if test="${attempt.score != null}">
-                            ${attempt.score}
-                            <c:if test="${attempt.test.questionCount != null}">
-                                / ${attempt.test.questionCount}
-                            </c:if>
-                        </c:if>
-                        <c:if test="${attempt.score == null}">
-                            –
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${attempt.test.showResult == 'NOTHING' or attempt.score == null}">
+                                –
+                            </c:when>
+                            <c:otherwise>
+                                ${attempt.score}
+                                <c:if test="${attempt.test.questionCount != null}">
+                                    / ${attempt.test.questionCount}
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
                     <td class="table-text">
                         <c:choose>
+                            <c:when test="${attempt.test.showResult == 'NOTHING'}">
+                                Отправлен
+                            </c:when>
                             <c:when test="${attempt.completedAt != null}">
                                 <c:choose>
                                     <c:when test="${attempt.success != null and attempt.success == true}">
